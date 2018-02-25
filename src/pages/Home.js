@@ -1,8 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setUser } from '../store/actions'
+import { withStyles } from 'material-ui/styles'
 
 import Button from 'material-ui/Button'
+
+const styles = theme => {
+  return {
+    root: {
+      backgroundColor: '#efe'
+    }
+  }
+}
 
 class Home extends React.Component {
   setUserId = () => {
@@ -11,9 +20,14 @@ class Home extends React.Component {
     })
   }
 
+  search = () => {
+    this.props.history.push('/search')
+  }
+
   render() {
+    const { classes } = this.props
     return (
-      <div>
+      <div className={classes.root}>
         <h2>Welcome to TopSub</h2>
         <h3>User</h3>
         {
@@ -21,6 +35,9 @@ class Home extends React.Component {
         }
         <Button variant="raised" color="primary" onClick={this.setUserId}>
           Random User ID
+        </Button>
+        <Button onClick={this.search}>
+          Search
         </Button>
       </div>
     )
@@ -46,4 +63,4 @@ const connectedHome = connect(
   mapDispatchToProps
 )(Home)
 
-export default connectedHome
+export default withStyles(styles)(connectedHome)
