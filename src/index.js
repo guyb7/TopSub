@@ -1,4 +1,4 @@
-import app from './server'
+import app from './api'
 import http from 'http'
 
 const server = http.createServer(app)

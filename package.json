@@ -2,6 +2,9 @@
   "name": "top-sub",
   "version": "0.1.0",
   "license": "MIT",
+  "engines": {
+    "node": ">=9.6.1"
+  },
   "scripts": {
     "start": "razzle start",
     "build": "razzle build",
@@ -9,6 +12,7 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "razzle": "^0.8.12",
     "react": "^16.2.0",
