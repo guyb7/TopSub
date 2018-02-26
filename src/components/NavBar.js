@@ -16,7 +16,8 @@ const styles = theme => {
       alignItems: 'center',
       '&[with-border=true]': {
         borderBottom: '1px solid ' + theme.palette.divider
-      }
+      },
+      ...theme.utils.container
     },
     title: theme.typography.title
   }

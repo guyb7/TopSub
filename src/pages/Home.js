@@ -5,15 +5,19 @@ import Button from 'material-ui/Button'
 
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
+import SearchForm from '../components/SearchForm'
 
 const styles = theme => {
   return {
     root: {
     },
-    intro: {
+    introContainer: {
       backgroundColor: theme.palette.custom.blueSea,
       paddingTop: theme.spacing.huge,
-      paddingBottom: theme.spacing.huge,
+      paddingBottom: theme.spacing.huge
+    },
+    intro: {
+      ...theme.utils.container,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center'
@@ -36,13 +40,16 @@ class Home extends React.Component {
     return (
       <div className={classes.root}>
         <NavBar />
-        <div className={classes.intro}>
-          <div className={classes.introText}>
-            Get daily emails for trending data
+        <div className={classes.introContainer}>
+          <div className={classes.intro}>
+            <div className={classes.introText}>
+              Get daily emails for trending data
+            </div>
+            <SearchForm />
+            <Button variant="raised" onClick={this.search}>
+              Search
+            </Button>
           </div>
-          <Button variant="raised" onClick={this.search}>
-            Search
-          </Button>
         </div>
         <Footer />
       </div>

@@ -13,7 +13,8 @@ const styles = theme => {
       justifyContent: 'space-between',
       '&[with-border=true]': {
         borderTop: '1px solid ' + theme.palette.divider
-      }
+      },
+      ...theme.utils.container
     }
   }
 }

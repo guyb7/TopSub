@@ -31,6 +31,13 @@ const Theme = createMuiTheme({
   },
   typography: {
 
+  },
+  utils: {
+    container: {
+      maxWidth: 960,
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }
   }
 })
 
