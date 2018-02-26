@@ -5,14 +5,14 @@ import { withStyles } from 'material-ui/styles'
 
 import Button from 'material-ui/Button'
 
+import NavBar from '../components/NavBar'
+
 const styles = theme => {
   return {
     root: {
-      padding: theme.spacing.double
     },
-    title: {
-      color: theme.palette.custom.brownLight,
-      margin: 0
+    container: {
+      padding: theme.spacing.double
     }
   }
 }
@@ -32,17 +32,19 @@ class Home extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <h2 className={classes.title}>Welcome to TopSub</h2>
-        <h3>User</h3>
-        {
-          JSON.stringify(this.props.user)
-        }
-        <Button variant="raised" color="primary" onClick={this.setUserId}>
-          Random User ID
-        </Button>
-        <Button variant="raised" color="secondary" onClick={this.search}>
-          Search
-        </Button>
+        <NavBar />
+        <div className={classes.container}>
+          <h3>User</h3>
+          {
+            JSON.stringify(this.props.user)
+          }
+          <Button variant="raised" color="primary" onClick={this.setUserId}>
+            Random User ID
+          </Button>
+          <Button variant="raised" color="secondary" onClick={this.search}>
+            Search
+          </Button>
+        </div>
       </div>
     )
   }

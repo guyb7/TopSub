@@ -3,9 +3,14 @@ import { withStyles } from 'material-ui/styles'
 
 import Button from 'material-ui/Button'
 
+import NavBar from '../components/NavBar'
+
 const styles = theme => {
   return {
     root: {
+    },
+    container: {
+      padding: theme.spacing.double
     }
   }
 }
@@ -19,10 +24,13 @@ class SearchResults extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <h3>Search results</h3>
-        <Button onClick={this.navHome}>
-          Back home
-        </Button>
+        <NavBar />
+        <div className={classes.container}>
+          <h3>Search results</h3>
+          <Button onClick={this.navHome}>
+            Back home
+          </Button>
+        </div>
       </div>
     )
   }

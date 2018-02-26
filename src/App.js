@@ -16,8 +16,6 @@ import './styles.css'
 const styles = theme => {
   return {
     root: {
-      color: Theme.palette.brownLight,
-      backgroundColor: Theme.palette.custom.blueSea,
       height: '100%'
     }
   }
