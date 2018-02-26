@@ -10,11 +10,13 @@ const styles = theme => {
   return {
     root: {
       paddingLeft: theme.spacing.triple,
-      borderBottom: '1px solid ' + theme.palette.divider,
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      '&[with-border=true]': {
+        borderBottom: '1px solid ' + theme.palette.divider
+      }
     },
     title: theme.typography.title
   }
@@ -50,7 +52,7 @@ class NavBar extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <div className={classes.root}>
+      <div className={classes.root} with-border={this.props.withBorder ? 'true' : 'false'}>
         <div className={classes.title}>
           TopSub
         </div>

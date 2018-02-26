@@ -8,10 +8,12 @@ const styles = theme => {
   return {
     root: {
       padding: theme.spacing.triple,
-      borderTop: '1px solid ' + theme.palette.divider,
       ...theme.typography.caption,
       display: 'flex',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      '&[with-border=true]': {
+        borderTop: '1px solid ' + theme.palette.divider
+      }
     }
   }
 }
@@ -35,7 +37,7 @@ class Footer extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <div className={classes.root}>
+      <div className={classes.root} with-border={this.props.withBorder ? 'true' : 'false'}>
         <div>
           © TopSub
         </div>
