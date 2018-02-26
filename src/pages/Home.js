@@ -1,6 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { setUser } from '../store/actions'
 import { withStyles } from 'material-ui/styles'
 
 import Button from 'material-ui/Button'
@@ -19,12 +17,6 @@ const styles = theme => {
 }
 
 class Home extends React.Component {
-  setUserId = () => {
-    this.props.setUser({
-      id: Math.round(Math.random() * 1000)
-    })
-  }
-
   search = () => {
     this.props.history.push('/search')
   }
@@ -35,13 +27,6 @@ class Home extends React.Component {
       <div className={classes.root}>
         <NavBar />
         <div className={classes.container}>
-          <h3>User</h3>
-          {
-            JSON.stringify(this.props.user)
-          }
-          <Button variant="raised" color="primary" onClick={this.setUserId}>
-            Random User ID
-          </Button>
           <Button variant="raised" color="secondary" onClick={this.search}>
             Search
           </Button>
@@ -52,23 +37,4 @@ class Home extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    user: state.user
-  }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    setUser(user) {
-      dispatch(setUser(user))
-    }
-  }
-}
-
-const connectedHome = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home)
-
-export default withStyles(styles)(connectedHome)
+export default withStyles(styles)(Home)
