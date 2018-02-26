@@ -3,12 +3,13 @@ import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 
 import Button from 'material-ui/Button'
+import { Link } from 'react-router-dom'
 
 const styles = theme => {
   return {
     root: {
       paddingLeft: theme.spacing.triple,
-      boxShadow: theme.shadows[2],
+      borderBottom: '1px solid ' + theme.palette.divider,
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -36,26 +37,21 @@ const buttonStyles = theme => {
     }
   }
 }
-
 const StyledButton = withStyles(buttonStyles)(Button)
 
 class NavBar extends React.Component {
-  navTo = path => {
-
-  }
-
   render() {
     const { classes } = this.props
     return (
       <div className={classes.root}>
         <div className={classes.title}>
-          Title
+          TopSub
         </div>
         <div>
-          <StyledButton onClick={this.navTo('sign-up')}>
+          <StyledButton to='/sign-up' component={Link} >
             Sign Up
           </StyledButton>
-          <StyledButton onClick={this.navTo('login')}>
+          <StyledButton to='/login' component={Link} >
             Login
           </StyledButton>
         </div>

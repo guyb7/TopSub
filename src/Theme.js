@@ -26,6 +26,9 @@ const Theme = createMuiTheme({
     double: 16,
     triple: 24,
     quad: 32
+  },
+  typography: {
+    
   }
 })
 

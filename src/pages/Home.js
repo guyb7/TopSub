@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 
 import NavBar from '../components/NavBar'
+import Footer from '../components/Footer'
 
 const styles = theme => {
   return {
@@ -45,6 +46,7 @@ class Home extends React.Component {
             Search
           </Button>
         </div>
+        <Footer />
       </div>
     )
   }
