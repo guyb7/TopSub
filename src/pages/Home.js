@@ -4,8 +4,8 @@ import { withStyles } from 'material-ui/styles'
 import API from '../components/API'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
-import SearchForm from '../components/SearchForm'
-import SearchResults from '../components/SearchResults'
+import SearchForm from '../components/Search/Form'
+import SearchResults from '../components/Search/Results'
 import Spinner from '../components/Spinner'
 
 const styles = theme => {
@@ -41,6 +41,7 @@ class Home extends React.Component {
       form: null,
       isLoading: false,
       results: null,
+      resultsComponent: 'basic',
       error: null
     }
   }
@@ -64,7 +65,8 @@ class Home extends React.Component {
         this.setState({
           ...this.state,
           isLoading: false,
-          results: results.data.results
+          results: results.data.results,
+          resultsComponent: results.data.component || this.state.resultsComponent
         })
       } catch (e) {
         console.error(e)
@@ -91,7 +93,9 @@ class Home extends React.Component {
               this.state.isLoading && <Spinner />
             }
             {
-              this.state.results && <SearchResults results={this.state.results} />
+              this.state.results && <SearchResults
+                results={this.state.results}
+                component={this.state.resultsComponent} />
             }
           </div>
         </div>
