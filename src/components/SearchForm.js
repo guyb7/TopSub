@@ -11,7 +11,7 @@ const limits = [
   { label: '5', value: 5 },
   { label: '10', value: 10 }
 ]
-const domains = [
+const topics = [
   { label: 'GitHub repos', value: 'github-repos' },
   { label: 'HN posts', value: 'hn-posts' },
   { label: 'Tweets', value: 'tweets' },
@@ -63,7 +63,7 @@ class SearchForm extends React.Component {
     super(props)
     this.state = {
       limit: 10,
-      domain: domains[0].value,
+      topic: topics[0].value,
       period: 'day'
     }
   }
@@ -71,7 +71,7 @@ class SearchForm extends React.Component {
   componentDidMount() {
     this.setState({
       ...this.state,
-      domain: _sample(domains, 1).value
+      topic: _sample(topics, 1).value
     }, () => {
       this.publishChange()
     })
@@ -108,12 +108,12 @@ class SearchForm extends React.Component {
         </FormControl>
         <FormControl className={classes.formControl}>
           <StyledSelect
-            value={this.state.domain}
+            value={this.state.topic}
             onChange={this.handleChange}
-            name="domain"
+            name="topic"
           >
             {
-              domains.map(d => <MenuItem key={d.value} value={d.value}>{d.label}</MenuItem>)
+              topics.map(t => <MenuItem key={t.value} value={t.value}>{t.label}</MenuItem>)
             }
           </StyledSelect>
         </FormControl>

@@ -1,5 +1,6 @@
 import getApp from './getApp'
 import getStatus from './getStatus'
+import getSearch from './getSearch'
 import { notFound, parseError, serverError } from './Errors'
 
 const isAdmin = async req => {
@@ -33,6 +34,7 @@ const ensureAdmin = (req, res, next) => {
 
 export default app => {
   app.get('/api/status', asyncMiddleware(getStatus))
+  app.get('/api/search', asyncMiddleware(getSearch))
 
   app.use('/api/admin/*', ensureAdmin)
 
