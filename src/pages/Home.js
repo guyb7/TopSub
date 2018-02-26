@@ -1,8 +1,6 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
 
-import Button from 'material-ui/Button'
-
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 import SearchForm from '../components/SearchForm'
@@ -31,8 +29,8 @@ const styles = theme => {
 }
 
 class Home extends React.Component {
-  search = () => {
-    this.props.history.push('/search')
+  search = form => {
+    console.log(form)
   }
 
   render() {
@@ -42,13 +40,7 @@ class Home extends React.Component {
         <NavBar />
         <div className={classes.introContainer}>
           <div className={classes.intro}>
-            <div className={classes.introText}>
-              Get daily emails for trending data
-            </div>
-            <SearchForm />
-            <Button variant="raised" onClick={this.search}>
-              Search
-            </Button>
+            <SearchForm onChange={form => this.search(form)} />
           </div>
         </div>
         <Footer />

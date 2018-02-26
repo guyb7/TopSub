@@ -1,70 +1,134 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
+import _sample from 'lodash/sample'
 
-import Autocomplete from './Autocomplete'
+import { MenuItem } from 'material-ui/Menu'
+import { FormControl } from 'material-ui/Form'
+import Select from 'material-ui/Select'
 
-const suggestions = [
-  { label: 'Afghanistan', value: 'afghanistan' },
-  { label: 'Aland Islands', value: 'aland-islands' },
-  { label: 'Albania', value: 'albania' },
-  { label: 'Algeria', value: 'algeria' },
-  { label: 'American Samoa', value: 'american-samoa' },
-  { label: 'Andorra', value: 'andorra' },
-  { label: 'Angola', value: 'angola' },
-  { label: 'Anguilla', value: 'anguilla' },
-  { label: 'Antarctica', value: 'antarctica' },
-  { label: 'Argentina', value: 'argentina' },
-  { label: 'Armenia', value: 'armenia' },
-  { label: 'Aruba', value: 'aruba' },
-  { label: 'Australia', value: 'australia' },
-  { label: 'Austria', value: 'austria' },
-  { label: 'Azerbaijan', value: 'azerbaijan' }
+const limits = [
+  { label: '3', value: 3 },
+  { label: '5', value: 5 },
+  { label: '10', value: 10 }
+]
+const domains = [
+  { label: 'GitHub repos', value: 'github-repos' },
+  { label: 'HN posts', value: 'hn-posts' },
+  { label: 'Tweets', value: 'tweets' },
+  { label: 'Nasdaq Stocks', value: 'nasdaq-stocks' }
+]
+const periods = [
+  { label: 'hour', value: 'hour' },
+  { label: 'day', value: 'day' },
+  { label: '3 days', value: '3days' },
+  { label: 'week', value: 'week' },
+  { label: 'month', value: 'month' }
 ]
 
 const styles = theme => {
   return {
     root: {
-
+      color: theme.palette.getContrastText(theme.palette.custom.blueSea),
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    formControl: {
+      margin: theme.spacing.unit,
+      textAlign: 'center'
+    },
+    text: {
+      paddingTop: 8,
+      paddingBottom: 12
     }
   }
 }
+
+const selectStyles = theme => {
+  return {
+    select: {
+      color: theme.palette.getContrastText(theme.palette.custom.blueSea),
+      paddingRight: theme.spacing.double,
+      paddingLeft: theme.spacing.double
+    },
+    icon: {
+      display: 'none'
+    }
+  }
+}
+const StyledSelect = withStyles(selectStyles)(Select)
 
 class SearchForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: null,
-      period: null,
-      placeholder: ''
+      limit: 10,
+      domain: domains[0].value,
+      period: 'day'
     }
   }
 
   componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        ...this.state,
-        placeholder: '' + Math.floor(Math.random() * 1000)
-      })
-    }, 1000)
-  }
-
-  handleDataChange = data => {
     this.setState({
       ...this.state,
-      data
+      domain: _sample(domains, 1).value
+    }, () => {
+      this.publishChange()
     })
+  }
+
+  handleChange = e => {
+    this.setState({
+      ...this.state,
+      [e.target.name]: e.target.value
+    }, () => {
+      this.publishChange()
+    })
+  }
+
+  publishChange() {
+    this.props.onChange(this.state)
   }
 
   render() {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        {JSON.stringify(this.state)}
-        <Autocomplete
-          suggestions={suggestions}
-          onChange={this.handleDataChange}
-          placeholder={this.state.placeholder}
-          />
+        <span className={classes.text}>Top</span>
+        <FormControl className={classes.formControl}>
+          <StyledSelect
+            value={this.state.limit}
+            onChange={this.handleChange}
+            name="limit"
+          >
+            {
+              limits.map(l => <MenuItem key={l.value} value={l.value}>{l.label}</MenuItem>)
+            }
+          </StyledSelect>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <StyledSelect
+            value={this.state.domain}
+            onChange={this.handleChange}
+            name="domain"
+          >
+            {
+              domains.map(d => <MenuItem key={d.value} value={d.value}>{d.label}</MenuItem>)
+            }
+          </StyledSelect>
+        </FormControl>
+        <span className={classes.text}>in the last</span>
+        <FormControl className={classes.formControl}>
+          <StyledSelect
+            value={this.state.period}
+            onChange={this.handleChange}
+            name="period"
+          >
+            {
+              periods.map(p => <MenuItem key={p.value} value={p.value}>{p.label}</MenuItem>)
+            }
+          </StyledSelect>
+        </FormControl>
       </div>
     )
   }

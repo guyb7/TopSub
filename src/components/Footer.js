@@ -8,6 +8,7 @@ const styles = theme => {
   return {
     root: {
       padding: theme.spacing.triple,
+      paddingRight: 0,
       ...theme.typography.caption,
       display: 'flex',
       justifyContent: 'space-between',
@@ -15,6 +16,10 @@ const styles = theme => {
         borderTop: '1px solid ' + theme.palette.divider
       },
       ...theme.utils.container
+    },
+    text: {
+      padding: theme.spacing.unit,
+      paddingLeft: 0
     }
   }
 }
@@ -39,7 +44,7 @@ class Footer extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root} with-border={this.props.withBorder ? 'true' : 'false'}>
-        <div>
+        <div className={classes.text}>
           © TopSub
         </div>
         <div>
