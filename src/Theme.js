@@ -25,10 +25,12 @@ const Theme = createMuiTheme({
     unit: 8,
     double: 16,
     triple: 24,
-    quad: 32
+    quad: 32,
+    big: 64,
+    huge: 128
   },
   typography: {
-    
+
   }
 })
 

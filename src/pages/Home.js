@@ -10,8 +10,18 @@ const styles = theme => {
   return {
     root: {
     },
-    container: {
-      padding: theme.spacing.double
+    intro: {
+      backgroundColor: theme.palette.custom.blueSea,
+      paddingTop: theme.spacing.huge,
+      paddingBottom: theme.spacing.huge,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
+    introText: {
+      ...theme.typography.headline,
+      color: theme.palette.getContrastText(theme.palette.custom.blueSea),
+      paddingBottom: theme.spacing.quad
     }
   }
 }
@@ -26,8 +36,11 @@ class Home extends React.Component {
     return (
       <div className={classes.root}>
         <NavBar />
-        <div className={classes.container}>
-          <Button variant="raised" color="secondary" onClick={this.search}>
+        <div className={classes.intro}>
+          <div className={classes.introText}>
+            Get daily emails for trending data
+          </div>
+          <Button variant="raised" onClick={this.search}>
             Search
           </Button>
         </div>
