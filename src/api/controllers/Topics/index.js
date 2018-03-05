@@ -6,11 +6,13 @@ const topics = [
   new HackerNews()
 ]
 
+const topicsDict = _.reduce(topics, (acc, t) => {
+  acc[t.info().id] = t
+  return acc
+}, {})
+
 const list = async () => {
-  return topics.reduce((acc, t) => {
-    acc.push(t.info().id)
-    return acc
-  }, [])
+  return _.keys(topicsDict)
 }
 
 const fetch = async () => {
@@ -29,6 +31,7 @@ const fetch = async () => {
 
 export default {
   topics,
+  topicsDict,
   list,
   fetch
 }
