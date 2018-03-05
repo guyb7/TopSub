@@ -2,9 +2,9 @@ import Topics from '../controllers/Topics/'
 
 export default async req => {
   try {
-    const list = await Topics.list()
+    const fetched = await Topics.fetch()
     return {
-      topics: list
+      fetched
     }
   } catch (e) {
     throw e

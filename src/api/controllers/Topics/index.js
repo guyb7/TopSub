@@ -9,19 +9,26 @@ const topics = [
 const list = async () => {
   return topics.reduce((acc, t) => {
     acc.push(t.info().id)
-    const tst = async () => {
-      const items = await t.fetchList()
-      const parsed = t.parseList(items)
-      const one = await t.fetchOne(_.sample(parsed, 1).id)
-      const parsedOne = t.parseOne(one)
-      console.log('parsedOne', parsedOne)
-    }
-    tst()
     return acc
   }, [])
 }
 
+const fetch = async () => {
+  //WIP
+  try {
+    const t = topics[0]
+    const items = await t.fetchList()
+    const parsed = t.parseList(items)
+    const one = await t.fetchOne(_.sample(parsed, 1).id)
+    const parsedOne = t.parseOne(one)
+    return parsedOne
+  } catch (e) {
+    throw e
+  }
+}
+
 export default {
   topics,
-  list
+  list,
+  fetch
 }

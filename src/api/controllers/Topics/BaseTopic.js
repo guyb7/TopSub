@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default class BaseTopic {
   constructor() {
     if (new.target === BaseTopic) {
@@ -20,6 +22,16 @@ export default class BaseTopic {
     }
     if (this.parseOne === undefined) {
       throw new TypeError('Missing implementation of "parseOne" method')
+    }
+  }
+
+  async fetch(url, method, params) {
+    try {
+      const response = await axios({ url, method, params })
+      return response.data
+    } catch (e) {
+      e.noCatch = true
+      throw e
     }
   }
 }

@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 import BaseTopic from '../BaseTopic'
 
 class HackerNews extends BaseTopic {
@@ -20,11 +18,7 @@ class HackerNews extends BaseTopic {
     const url = 'https://hacker-news.firebaseio.com/v0/topstories.json'
     const method = 'get'
     try {
-      const response = await axios({ url, method })
-      if (response.status !== 200) {
-        throw new Error(`Error code ${response.status}`)
-      }
-      return response.data
+      return this.fetch(url, method)
     } catch (e) {
       throw e
     }
@@ -40,11 +34,7 @@ class HackerNews extends BaseTopic {
     const url = `https://hacker-news.firebaseio.com/v0/item/${id}.json`
     const method = 'get'
     try {
-      const response = await axios({ url, method })
-      if (response.status !== 200) {
-        throw new Error(`Error code ${response.status}`)
-      }
-      return response.data
+      return this.fetch(url, method)
     } catch (e) {
       throw e
     }
