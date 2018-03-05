@@ -5,28 +5,21 @@ export default class BaseTopic {
     }
     if (this.info === undefined) {
       throw new TypeError('Missing implementation of "info" method')
-      /*
-        {
-          id,
-          name,
-          tags
-        }
-      */
     }
-    if (this.getScrapeInfo === undefined) {
-      throw new TypeError('Missing implementation of "getScrapeInfo" method')
-      /*
-        {
-          url,
-          method,
-          params,
-          schema,
-          parse
-        }
-      */
+    if (this.getSchedule === undefined) {
+      throw new TypeError('Missing implementation of "getSchedule" method')
     }
-    if (this.parse === undefined) {
-      throw new TypeError('Missing implementation of "parse" method')
+    if (this.fetchList === undefined) {
+      throw new TypeError('Missing implementation of "fetchList" method')
+    }
+    if (this.parseList === undefined) {
+      throw new TypeError('Missing implementation of "parseList" method')
+    }
+    if (this.fetchOne === undefined) {
+      throw new TypeError('Missing implementation of "fetchOne" method')
+    }
+    if (this.parseOne === undefined) {
+      throw new TypeError('Missing implementation of "parseOne" method')
     }
   }
 }

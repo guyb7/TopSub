@@ -13,25 +13,8 @@ describe('Topics', () => {
       const info = topic.info()
       expect(getType(info.id)).toBe('string')
       expect(getType(info.name)).toBe('string')
+      expect(getType(info.description)).toBe('string')
       expect(getType(info.tags)).toBe('array')
-    }
-  })
-
-  test('All topics methods have the correct getScrapeInfo() signature', () => {
-    for (let i = 0; i < Topics.topics.length; i++) {
-      const topic = Topics.topics[i]
-      const scrapeInfo = topic.getScrapeInfo()
-      expect(getType(scrapeInfo.url)).toBe('string')
-      expect(getType(scrapeInfo.method)).toBe('string')
-      expect(getType(scrapeInfo.params)).toBe('object')
-      expect(getType(scrapeInfo.schema)).toBe('regexp')
-      expect(getType(scrapeInfo.parse)).toBe('function')
-    }
-  })
-
-  test('All topics methods have the correct parse() signature', () => {
-    for (let i = 0; i < Topics.topics.length; i++) {
-      expect(getType(Topics.topics[i].parse)).toBe('function')
     }
   })
 })

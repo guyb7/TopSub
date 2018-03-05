@@ -5,10 +5,10 @@ import HackerNewsClass from './index.js'
 const HackerNews = new HackerNewsClass()
 
 describe('HackerNews', () => {
-  test('Parse', () => {
-    const input = ``
-    const output = HackerNews.parse(input)
+  test('parseList', () => {
+    const input = [123, 456]
+    const output = HackerNews.parseList(input)
 
-    expect(getType(output.id)).toBe('string')
+    expect(getType(output)).toBe('array')
   })
 })
