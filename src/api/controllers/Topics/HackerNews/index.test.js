@@ -11,4 +11,21 @@ describe('HackerNews', () => {
 
     expect(getType(output)).toBe('array')
   })
+
+  test('parseItem', () => {
+    const input = {
+      id: 123,
+      score: 33,
+      time: 1519999999,
+      title: 'Story title',
+      url: 'https://www.some-website.com/'
+    }
+    const output = HackerNews.parseOne(input)
+
+    expect(getType(output.id)).toBe('string')
+    expect(getType(output.score)).toBe('number')
+    expect(getType(output.time)).toBe('number')
+    expect(getType(output.title)).toBe('string')
+    expect(getType(output.url)).toBe('string')
+  })
 })

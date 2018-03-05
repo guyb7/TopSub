@@ -42,7 +42,7 @@ class HackerNews extends BaseTopic {
 
   parseOne(item) {
     return {
-      id: item.id,
+      id: '' + item.id,
       score: item.score,
       time: item.time,
       title: item.title,
