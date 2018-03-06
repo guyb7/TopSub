@@ -2,7 +2,6 @@ import getApp from './getApp'
 import getStatus from './getStatus'
 import getSearch from './getSearch'
 import getTopics from './getTopics'
-import getTopicsFetch from './getTopicsFetch'
 import { notFound, parseError, serverError } from './Errors'
 
 const isAdmin = async req => {
@@ -38,7 +37,6 @@ export default app => {
   app.get('/api/status', asyncMiddleware(getStatus))
   app.get('/api/search', asyncMiddleware(getSearch))
   app.get('/api/topics', asyncMiddleware(getTopics))
-  app.get('/api/topics/fetch', asyncMiddleware(getTopicsFetch))
 
   app.use('/api/admin/*', ensureAdmin)
 
