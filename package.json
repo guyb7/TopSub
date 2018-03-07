@@ -10,21 +10,27 @@
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "start:prod": "NODE_ENV=production node build/server.js",
-    "workers:scrape": "babel-node src/workers/scrape.js --presets es2015,stage-2"
+    "workers:scrape": "babel-node src/workers/scrape.js --presets es2015,stage-2",
+    "db:start": "docker run --name topsub-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5444:5432 postgres",
+    "db:rm": "docker stop topsub-postgres && docker rm topsub-postgres"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "lodash": "^4.17.5",
     "material-ui": "^1.0.0-beta.35",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
     "razzle": "^0.8.12",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "sequelize": "^4.35.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
