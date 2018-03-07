@@ -6,17 +6,20 @@ import { MenuItem } from 'material-ui/Menu'
 import { FormControl } from 'material-ui/Form'
 import Select from 'material-ui/Select'
 
+import Topics from '../../api/controllers/Topics/'
+
 const limits = [
   { label: '3', value: 3 },
   { label: '5', value: 5 },
   { label: '10', value: 10 }
 ]
-const topics = [
-  { label: 'GitHub repos', value: 'github-repos' },
-  { label: 'HN posts', value: 'hn-posts' },
-  { label: 'Tweets', value: 'tweets' },
-  { label: 'Nasdaq Stocks', value: 'nasdaq-stocks' }
-]
+const topics = Topics.topics.map(t => {
+  const info = t.info()
+  return {
+    label: info.name,
+    value: info.id
+  }
+})
 const periods = [
   { label: 'hour', value: 'hour' },
   { label: 'day', value: 'day' },
