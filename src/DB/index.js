@@ -1,9 +1,13 @@
 import Sequelize from 'sequelize'
 
 import Result from './Result'
+import Subscription from './Subscription'
+import User from './User'
 
 const modelsDefinitions = [
-  Result
+  Result,
+  Subscription,
+  User
 ]
 
 const models = {}
