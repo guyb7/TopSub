@@ -24,6 +24,16 @@ To run a local DB in a docker container, make sure you're logged in to docker wi
 
 To remove the container run `yarn db:rm`.
 
+Sync DB with:
+```
+yarn sequelize db:migrate
+```
+Add a DB model and a [migration](http://docs.sequelizejs.com/manual/tutorial/migrations.html):
+```
+yarn sequelize model:generate --name User --attributes firstName:string,lastName:string
+```
+Then edit the `src/DB/migrations/xxx-create.user.js` and `src/DB/models/user.js` files.
+
 ## Development
 * `yarn start`
 

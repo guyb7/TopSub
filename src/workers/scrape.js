@@ -14,8 +14,15 @@ const main = async (topic) => {
   const parsedOne = t.parseOne(one)
   console.log('parsedOne', parsedOne)
   //TODO store
-  // await DB.models.Result.create({ externalId: 'a123', })
-  const results = await DB.models.Result.findAll()
+  await DB.models.Results.create({
+    topic,
+    externalId: parsedOne.id,
+    score: parsedOne.score,
+    publishTime: parsedOne.time,
+    url: parsedOne.url,
+    data: { a: 'b' }
+  })
+  const results = await DB.models.Results.findAll()
   console.log('results', results)
   await DB.close()
 }

@@ -1,9 +1,7 @@
 import Sequelize from 'sequelize'
 
-export default {
-  name: 'Subscription',
-  key: 'subscription',
-  definition: {
+export default sequelize => {
+  const Subscription = sequelize.define('Subscription', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -40,5 +38,6 @@ export default {
         isEmail: true
       }
     }
-  }
+  }, {})
+  return Subscription
 }

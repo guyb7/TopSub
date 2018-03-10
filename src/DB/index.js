@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize'
 
-import Result from './Result'
-import Subscription from './Subscription'
-import User from './User'
+import Result from './models/result'
+import Subscription from './models/subscription'
+import User from './models/user'
 
 const modelsDefinitions = [
   Result,
@@ -41,8 +41,9 @@ const init = async () => {
     throw e
   }
   for (let m of modelsDefinitions) {
-    models[m.name] = sequelize.define(m.key, m.definition)
-    await models[m.name].sync()
+    const model = m(sequelize)
+    models[model.getTableName()] = model
+    model.sync()
   }
 }
 

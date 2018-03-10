@@ -1,9 +1,7 @@
 import Sequelize from 'sequelize'
 
-export default {
-  name: 'User',
-  key: 'user',
-  definition: {
+export default sequelize => {
+  const User = sequelize.define('User', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -23,11 +21,14 @@ export default {
       type: Sequelize.STRING,
       allowNull: false
     }
-  },
-  indexes: [
-    {
-      unique: true,
-      fields: ['email']
-    }
-  ]
+  }, {
+    paranoid: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['email']
+      }
+    ]
+  })
+  return User
 }

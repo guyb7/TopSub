@@ -30,7 +30,8 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "sequelize": "^4.35.2"
+    "sequelize": "^4.35.2",
+    "sequelize-cli": "^4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

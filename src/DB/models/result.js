@@ -1,9 +1,7 @@
 import Sequelize from 'sequelize'
 
-export default {
-  name: 'Result',
-  key: 'result',
-  definition: {
+export default sequelize => {
+  const Result = sequelize.define('Result', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -32,5 +30,6 @@ export default {
     data: {
       type: Sequelize.JSONB
     }
-  }
+  }, {})
+  return Result
 }
