@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 import BaseTopic from '../BaseTopic'
 
 class HackerNews extends BaseTopic {
@@ -41,12 +43,14 @@ class HackerNews extends BaseTopic {
   }
 
   parseOne(item) {
+    const utcTime = moment.utc(item.time, 'X').format('YYYY-MM-DD HH:mm:ss+0000')
+    const url = item.url || `https://news.ycombinator.com/item?id=${item.id}`
     return {
       id: '' + item.id,
       score: item.score,
-      time: item.time,
+      time: utcTime,
       title: item.title,
-      url: item.url
+      url
     }
   }
 }
