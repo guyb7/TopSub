@@ -13,17 +13,17 @@ const modelsDefinitions = [
 const models = {}
 
 const {
-  PG_HOST,
-  PG_PORT,
-  PG_DB,
-  PG_USER,
-  PG_PASSWORD,
-  DB_LOGGING
+  RAZZLE_PG_HOST,
+  RAZZLE_PG_PORT,
+  RAZZLE_PG_DB,
+  RAZZLE_PG_USER,
+  RAZZLE_PG_PASSWORD,
+  RAZZLE_DB_LOGGING
 } = process.env
 
-const sequelize = new Sequelize(PG_DB, PG_USER, PG_PASSWORD, {
-  host: PG_HOST,
-  port: PG_PORT,
+const sequelize = new Sequelize(RAZZLE_PG_DB, RAZZLE_PG_USER, RAZZLE_PG_PASSWORD, {
+  host: RAZZLE_PG_HOST,
+  port: RAZZLE_PG_PORT,
   dialect: 'postgres',
   operatorsAliases: false,
   pool: {
@@ -33,7 +33,7 @@ const sequelize = new Sequelize(PG_DB, PG_USER, PG_PASSWORD, {
     idle: 10000
   },
   logging: (message, benchmark) => {
-    if (DB_LOGGING !== 'false') {
+    if (RAZZLE_DB_LOGGING !== 'false') {
       console.log(benchmark, message)
     }
   },
@@ -44,7 +44,7 @@ const init = async () => {
   try {
     await sequelize.authenticate()
   } catch (e) {
-    console.error(`Unable to connect to the database on ${PG_USER}@${PG_HOST}:${PG_PORT}: `, e)
+    console.error(`Unable to connect to the database on ${RAZZLE_PG_USER}@${RAZZLE_PG_HOST}:${RAZZLE_PG_PORT}: `, e)
     throw e
   }
   for (let m of modelsDefinitions) {
@@ -62,5 +62,6 @@ const close = async () => {
 export default {
   init,
   close,
-  models
+  models,
+  sequelize
 }

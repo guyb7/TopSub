@@ -28,7 +28,7 @@ export default sequelize => {
       allowNull: false,
       validate: {
         // Sanity, not perfect match
-        is: /^[\d\*\,\s]+$/
+        is: /^[\d*,\s]+$/
       }
     },
     email: {

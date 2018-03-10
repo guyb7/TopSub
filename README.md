@@ -9,14 +9,13 @@ Subscribe to search results
 NODE_ENV=development
 PORT=3010
 
-PG_HOST=127.0.0.1
-PG_PORT=5444
-PG_DB=postgres
-PG_USER=postgres
-PG_PASSWORD=mysecretpassword
+RAZZLE_PG_HOST=127.0.0.1
+RAZZLE_PG_PORT=5444
+RAZZLE_PG_DB=postgres
+RAZZLE_PG_USER=postgres
+RAZZLE_PG_PASSWORD=mysecretpassword
 
-DB_LOGGING=true
-
+RAZZLE_DB_LOGGING=true
 ```
 
 ## DB

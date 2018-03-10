@@ -17,10 +17,11 @@ const styles = theme => {
 class Basic extends React.Component {
   render() {
     const { classes, data } = this.props
+    console.log(data)
     return (
-      <ListItem classes={classes} button component='a' href={this.props.data.link} target='_blank'>
-        <Avatar src={data.image.url} />
-        <ListItemText primary={data.title} secondary={data.text} />
+      <ListItem classes={classes} button component='a' href={data.url} target='_blank'>
+        <Avatar src={data.image} />
+        <ListItemText primary={data.data.title} secondary={data.text} />
       </ListItem>
     )
   }
