@@ -28,7 +28,7 @@ class HackerNews extends BaseTopic {
 
   parseList(items) {
     return items.map(i => ({
-      id: i
+      externalId: '' + i
     }))
   }
 
@@ -46,10 +46,12 @@ class HackerNews extends BaseTopic {
     const utcTime = moment.utc(item.time, 'X').format('YYYY-MM-DD HH:mm:ss+0000')
     const url = item.url || `https://news.ycombinator.com/item?id=${item.id}`
     return {
-      id: '' + item.id,
+      externalId: '' + item.id,
       score: item.score,
       time: utcTime,
-      title: item.title,
+      data: {
+        title: item.title,
+      },
       url
     }
   }

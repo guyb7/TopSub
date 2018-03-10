@@ -17,7 +17,8 @@ const {
   PG_PORT,
   PG_DB,
   PG_USER,
-  PG_PASSWORD
+  PG_PASSWORD,
+  DB_LOGGING
 } = process.env
 
 const sequelize = new Sequelize(PG_DB, PG_USER, PG_PASSWORD, {
@@ -30,7 +31,13 @@ const sequelize = new Sequelize(PG_DB, PG_USER, PG_PASSWORD, {
     min: 0,
     acquire: 30000,
     idle: 10000
-  }
+  },
+  logging: (message, benchmark) => {
+    if (DB_LOGGING !== 'false') {
+      console.log(benchmark, message)
+    }
+  },
+  benchmark: true
 })
 
 const init = async () => {

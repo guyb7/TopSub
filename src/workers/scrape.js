@@ -4,26 +4,55 @@ import DB from '../DB/'
 
 import Topics from '../api/controllers/Topics/'
 
-const main = async (topic) => {
+const main = async topic => {
   await DB.init()
+  // Scrape and parse
   const t = Topics.topicsDict[topic]
-  const items = await t.fetchList()
-  const parsed = t.parseList(items)
-  //TODO filter existing
-  const one = await t.fetchOne(_.sample(parsed, 1).id)
-  const parsedOne = t.parseOne(one)
-  console.log('parsedOne', parsedOne)
-  //TODO store
-  await DB.models.Results.create({
-    topic,
-    externalId: parsedOne.id,
-    score: parsedOne.score,
-    publishTime: parsedOne.time,
-    url: parsedOne.url,
-    data: { a: 'b' }
+  const data = await t.fetchList()
+  const items = t.parseList(data)
+
+  
+  // Filter existing
+  const ids = await DB.models.Results.findAll({ attributes: ['externalId'] }).map(r => r.externalId)
+  const existingIds = new Set(ids)
+  const filtered = _.filter(items, i => !existingIds.has(i.externalId))
+
+  console.log('[Found]', items.length)
+  console.log('[Already existing]', [...existingIds].length)
+
+  // Fetch each item
+  const fetchJobs = filtered.map(i => {
+    return new Promise(resolve => {
+      t.fetchOne(i.externalId)
+        .then(itemData => {
+          const item = t.parseOne(itemData)
+          resolve(item)
+        })
+    }, reject => {
+      reject()
+    })
   })
-  const results = await DB.models.Results.findAll()
-  console.log('results', results)
+  const itemsToStore = await Promise.all(fetchJobs)
+
+  // Store data
+  console.log('[Storing]', itemsToStore.length)
+  const storeJobs = itemsToStore.map(item => {
+    return new Promise(resolve => {
+      DB.models.Results.create({
+        topic,
+        externalId: item.externalId,
+        score: item.score,
+        publishTime: item.time,
+        url: item.url,
+        data: item.data
+      })
+      .then(resolve)
+    }, reject => {
+      reject()
+    })
+  })
+  await Promise.all(storeJobs)
+
   await DB.close()
 }
 

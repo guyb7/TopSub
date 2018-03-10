@@ -15,6 +15,8 @@ PG_DB=postgres
 PG_USER=postgres
 PG_PASSWORD=mysecretpassword
 
+DB_LOGGING=true
+
 ```
 
 ## DB
