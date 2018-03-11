@@ -56,4 +56,6 @@ const main = async topic => {
   await DB.close()
 }
 
+console.log(process.argv)
+process.exit()
 main('hackernews')

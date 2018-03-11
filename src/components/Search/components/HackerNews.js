@@ -51,7 +51,7 @@ class HackerNews extends React.Component {
     const { classes, data } = this.props
     const timeAgo = moment.utc(data.publishTime).fromNow()
     const hnUrl = `https://news.ycombinator.com/item?id=${data.externalId}`
-    
+
     return (
       <div className={classes.root}>
         <div className={classes.title}>

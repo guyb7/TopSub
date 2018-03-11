@@ -6,6 +6,7 @@ import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 import SearchForm from '../components/Search/Form'
 import SearchResults from '../components/Search/Results'
+import SubscribeForm from '../components/Search/SubscribeForm'
 import Spinner from '../components/Spinner'
 
 const styles = theme => {
@@ -53,14 +54,14 @@ class Home extends React.Component {
     }, this.search)
   }
 
-  search = form => {
+  search = () => {
     this.setState({
       ...this.state,
       isLoading: true,
       results: null
     }, async () => {
       try {
-        const results = await API.get('/search', { params: form })
+        const results = await API.get('/search', { params: this.state.form })
         this.setState({
           ...this.state,
           isLoading: false,
@@ -85,7 +86,7 @@ class Home extends React.Component {
         <NavBar />
         <div className={classes.main}>
           <div className={classes.form}>
-            <SearchForm onChange={form => this.search(form)} />
+            <SearchForm onChange={form => this.onFormChange(form)} />
           </div>
           <div className={classes.results}>
             {
@@ -97,6 +98,7 @@ class Home extends React.Component {
                 component={this.state.resultsComponent} />
             }
           </div>
+          <SubscribeForm form={this.state.form} />
         </div>
         <Footer />
       </div>
