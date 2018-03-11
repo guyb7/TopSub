@@ -8,7 +8,8 @@ class HackerNews extends BaseTopic {
       id: 'hackernews',
       name: 'HackerNews',
       description: 'Most upvoted posts on HN',
-      tags: []
+      tags: [],
+      component: 'HackerNews'
     }
   }
 

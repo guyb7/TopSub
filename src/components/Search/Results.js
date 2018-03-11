@@ -3,6 +3,7 @@ import { withStyles } from 'material-ui/styles'
 
 import Basic from './components/Basic'
 import Tweet from './components/Tweet'
+import HackerNews from './components/HackerNews'
 
 const styles = theme => {
   return {
@@ -23,8 +24,11 @@ class SearchResults extends React.Component {
     const { classes, component, results } = this.props
     let Component
     switch(component) {
-      case 'tweet':
+      case 'Tweet':
         Component = Tweet
+        break
+      case 'HackerNews':
+        Component = HackerNews
         break
       default:
         Component = Basic

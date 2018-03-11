@@ -1,12 +1,9 @@
 import moment from 'moment'
 
 import DB from '../../DB/'
+import Topics from '../controllers/Topics/'
 
-
-export default async req => {
-  console.log(req.query)
-  const { limit, topic, period } = req.query
-  const Op = DB.sequelize.Op
+const getStartTime = period => {
   let since
   switch (period) {
     case '3days':
@@ -22,7 +19,14 @@ export default async req => {
       since = moment().utc().startOf('day')
   }
   since = since.format('YYYY-MM-DD HH:mm:ss+0000')
-  console.log('since', since)
+  return since
+}
+
+export default async req => {
+  const { limit, topic, period } = req.query
+  const component = (Topics.topicsDict[topic] && Topics.topicsDict[topic].info().component) || 'basic'
+  const since = getStartTime(period)
+  const Op = DB.sequelize.Op
   const results = await DB.models.Results.findAll({
     where: {
       topic,
@@ -33,11 +37,12 @@ export default async req => {
     order: [
       ['score', 'DESC']
     ],
-    limit
+    limit,
+    attributes: { exclude: ['createdAt'] }
   })
   return {
     success: true,
-    component: req.query.topic === 'tweets' ? 'tweet' : 'basic',
+    component,
     results
   }
 }

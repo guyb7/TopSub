@@ -2,7 +2,6 @@ import React from 'react'
 import { withStyles } from 'material-ui/styles'
 
 import { ListItem, ListItemText } from 'material-ui/List'
-import Avatar from 'material-ui/Avatar'
 
 const styles = theme => {
   return {
@@ -14,16 +13,18 @@ const styles = theme => {
   }
 }
 
-class Basic extends React.Component {
+class HackerNews extends React.Component {
   render() {
     const { classes, data } = this.props
     return (
       <ListItem classes={classes} button component='a' href={data.url} target='_blank'>
-        <Avatar src={data.image} />
+        <div>
+          {data.score}
+        </div>
         <ListItemText primary={data.data.title} secondary={data.text} />
       </ListItem>
     )
   }
 }
 
-export default withStyles(styles)(Basic)
+export default withStyles(styles)(HackerNews)
