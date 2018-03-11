@@ -46,15 +46,24 @@ class HackerNews extends BaseTopic {
   parseOne(item) {
     const utcTime = moment.utc(item.time, 'X').format('YYYY-MM-DD HH:mm:ss+0000')
     const url = item.url || `https://news.ycombinator.com/item?id=${item.id}`
+    const domain = this.extractDomain(url)
     return {
       externalId: '' + item.id,
       score: item.score,
       time: utcTime,
       data: {
         title: item.title,
+        comments: item.descendants,
+        domain
       },
       url
     }
+  }
+
+  extractDomain(url) {
+    const matches = url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)
+    const domain = matches && matches[1]
+    return domain
   }
 }
 

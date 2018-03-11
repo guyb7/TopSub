@@ -59,7 +59,6 @@ class Home extends React.Component {
       isLoading: true,
       results: null
     }, async () => {
-      console.log('Search', form)
       try {
         const results = await API.get('/search', { params: form })
         this.setState({

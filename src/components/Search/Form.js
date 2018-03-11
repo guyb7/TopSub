@@ -67,7 +67,7 @@ class SearchForm extends React.Component {
     this.state = {
       limit: 10,
       topic: topics[0].value,
-      period: 'day'
+      period: '3days'
     }
   }
 

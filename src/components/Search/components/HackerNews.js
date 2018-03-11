@@ -21,7 +21,7 @@ class HackerNews extends React.Component {
         <div>
           {data.score}
         </div>
-        <ListItemText primary={data.data.title} secondary={data.text} />
+        <ListItemText primary={data.data.title} secondary={data.data.domain} />
       </ListItem>
     )
   }
