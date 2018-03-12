@@ -6,11 +6,14 @@ import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
 import { MenuItem } from 'material-ui/Menu'
 import Select from 'material-ui/Select'
+import Snackbar from 'material-ui/Snackbar'
 
+import API from '../API'
 import EmailSvg from 'mdi-svg/svg/email-outline.svg'
 import ClockSvg from 'mdi-svg/svg/clock.svg'
 import ClandarSvg from 'mdi-svg/svg/calendar.svg'
 import ArrowRightSvg from 'mdi-svg/svg/arrow-right.svg'
+import DoneSvg from 'mdi-svg/svg/check.svg'
 import MdIcon from '../MdIcon'
 
 const styles = theme => {
@@ -45,6 +48,7 @@ const styles = theme => {
     },
     button: {
       margin: theme.spacing.unit,
+      marginTop: theme.spacing.double,
       '&>span>div>div': {
         display: 'flex'
       }
@@ -73,6 +77,21 @@ const styles = theme => {
       alignItems: 'flex-end',
       width: '100%',
       maxWidth: 230
+    },
+    done: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      color: theme.palette.custom.brownLight,
+      margin: theme.spacing.unit,
+      marginTop: theme.spacing.double,
+      height: 40,
+      '& *': {
+        display: 'flex'
+      },
+      '& svg': {
+        marginLeft: theme.spacing.unit
+      }
     }
   }
 }
@@ -102,7 +121,11 @@ class SubscribeForm extends React.Component {
     this.state = {
       frequency: 'sunday',
       time: 'morning',
-      email: ''
+      email: '',
+      emailError: false,
+      isLoading: false,
+      isDone: false,
+      submitError: false
     }
   }
 
@@ -120,7 +143,8 @@ class SubscribeForm extends React.Component {
   changeFrequency = event => {
     this.setState({
       ...this.state,
-      frequency: event.target.value
+      frequency: event.target.value,
+      time: event.target.value === 'once' ? 'now' : (this.state.time === 'now' ? 'morning' : this.state.time)
     })
   }
 
@@ -134,7 +158,8 @@ class SubscribeForm extends React.Component {
   changeEmail = () => event => {
     this.setState({
       ...this.state,
-      email: event.target.value
+      email: event.target.value,
+      emailError: false
     })
   }
 
@@ -143,8 +168,61 @@ class SubscribeForm extends React.Component {
     return re.test(this.state.email)
   }
 
+  subscribe = () => {
+    if (!this.isEmailValid()) {
+      this.setState({
+        ...this.state,
+        emailError: true
+      })
+      return
+    }
+    const tzHoursOffset = -(new Date().getTimezoneOffset() / 60)
+    const form = {
+      ...this.props.form,
+      frequency: this.state.frequency,
+      time: this.state.time,
+      email: this.state.email,
+      tzHoursOffset
+    }
+    this.setState({
+      ...this.state,
+      isLoading: true,
+      submitError: false
+    }, async () => {
+      try {
+        await API.post('/subscribe', form)
+        this.setState({
+          ...this.state,
+          isLoading: false,
+          isDone: true
+        })
+      } catch (e) {
+        console.error(e)
+        this.setState({
+          ...this.state,
+          isLoading: false,
+          submitError: 'Something went wrong, the email was not registered'
+        })
+      }
+    })
+  }
+
+  reset = () => {
+    this.setState({
+      ...this.state,
+      isDone: false
+    })
+  }
+
+  hideSubmitError = () => {
+    this.setState({
+      ...this.state,
+      submitError: false
+    })
+  }
+
   render() {
-    const { classes, form } = this.props
+    const { classes } = this.props
     const ctaText = this.getCtaText()
     return (
       <div className={classes.root}>
@@ -155,6 +233,7 @@ class SubscribeForm extends React.Component {
           <StyledSelect
             value={this.state.frequency}
             onChange={this.changeFrequency}
+            disabled={this.state.isLoading || this.state.isDone}
             className={classes.select} >
             <MenuItem value='once'>One time</MenuItem>
             <MenuItem value='daily'>Every day</MenuItem>
@@ -166,10 +245,14 @@ class SubscribeForm extends React.Component {
         <div className={classes.fieldContainer}>
           <StyledIcon svg={ClockSvg} />
           <StyledSelect
-            value={this.state.frequency === 'once' ? '' : this.state.time}
+            value={this.state.time}
             onChange={this.changeTime}
-            disabled={this.state.frequency === 'once'}
+            disabled={this.state.frequency === 'once' || this.state.isLoading || this.state.isDone}
             className={classes.select} >
+            {
+              this.state.frequency === 'once' &&
+              <MenuItem value='now'>Now</MenuItem>
+            }
             <MenuItem value='morning'>In the morning</MenuItem>
             <MenuItem value='noon'>At noon</MenuItem>
             <MenuItem value='evening'>In the evening</MenuItem>
@@ -180,19 +263,38 @@ class SubscribeForm extends React.Component {
           <TextField
             placeholder='Email'
             type='email'
+            disabled={this.state.isLoading || this.state.isDone}
             className={classes.textField}
             value={this.state.email}
             InputProps={{ className: classes.input }}
+            error={this.state.emailError || null}
             onChange={this.changeEmail()} />
         </div>
-        <Button
-          className={classes.button}
-          variant="raised"
-          onClick={this.open}
-          >
-          {ctaText}
-          <MdIcon className={classes.rightIcon} svg={ArrowRightSvg} />
-        </Button>
+        {
+          !this.state.isDone &&
+          <Button
+            className={classes.button}
+            variant="raised"
+            onClick={this.subscribe}
+            disabled={this.state.isLoading}
+            >
+            {ctaText}
+            <MdIcon className={classes.rightIcon} svg={ArrowRightSvg} />
+          </Button>
+        }
+        {
+          this.state.isDone &&
+          <Button className={classes.done} onClick={this.reset}>
+            Done!
+            <MdIcon svg={DoneSvg} />
+          </Button>
+        }
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={!!this.state.submitError}
+          onClose={this.hideSubmitError}
+          message={<span>{this.state.submitError}</span>}
+        />
       </div>
     )
   }

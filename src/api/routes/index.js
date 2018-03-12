@@ -2,6 +2,7 @@ import getApp from './getApp'
 import getStatus from './getStatus'
 import getSearch from './getSearch'
 import getTopics from './getTopics'
+import postSubscribe from './postSubscribe'
 import { notFound, parseError, serverError } from './Errors'
 
 const isAdmin = async req => {
@@ -34,9 +35,10 @@ const ensureAdmin = (req, res, next) => {
 }
 
 export default app => {
-  app.get('/api/status', asyncMiddleware(getStatus))
-  app.get('/api/search', asyncMiddleware(getSearch))
-  app.get('/api/topics', asyncMiddleware(getTopics))
+  app.get ('/api/status', asyncMiddleware(getStatus))
+  app.get ('/api/search', asyncMiddleware(getSearch))
+  app.get ('/api/topics', asyncMiddleware(getTopics))
+  app.post('/api/subscribe', asyncMiddleware(postSubscribe))
 
   app.use('/api/admin/*', ensureAdmin)
 
