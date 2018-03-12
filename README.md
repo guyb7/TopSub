@@ -27,13 +27,19 @@ To remove the container run `yarn db:rm`.
 
 Sync DB with:
 ```
-yarn sequelize db:migrate
+yarn sequelize db:migrate --config src/DB/config.js
 ```
 Add a DB model and a [migration](http://docs.sequelizejs.com/manual/tutorial/migrations.html):
 ```
 yarn sequelize model:generate --name User --attributes firstName:string,lastName:string
 ```
 Then edit the `src/DB/migrations/xxx-create.user.js` and `src/DB/models/user.js` files.
+
+Add a DB migration to an existing model:
+```
+yarn sequelize migration:generate --name User
+```
+Then edit the new migration in `src/DB/migrations` and provide up/down methods using the [QueryInterface API](http://docs.sequelizejs.com/class/lib/query-interface.js~QueryInterface.html).
 
 ## Development
 * `yarn start`

@@ -21,6 +21,11 @@ const errors = {
     id: 12,
     code: 403,
     message: 'You are not authorized to make this request'
+  },
+  'invalid-input': {
+    id: 13,
+    code: 400,
+    message: 'The provided parameters are invalid'
   }
 }
 

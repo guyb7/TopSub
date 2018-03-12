@@ -31,6 +31,11 @@ export default sequelize => {
         is: /^[\d*,\s]+$/
       }
     },
+    tzHoursOffset: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0,
+      allowNull: false
+    },
     email: {
       type: Sequelize.STRING,
       allowNull: false,

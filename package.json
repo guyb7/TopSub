@@ -34,7 +34,8 @@
     "react-svg": "^2.2.14",
     "redux": "^3.7.2",
     "sequelize": "^4.35.2",
-    "sequelize-cli": "^4.0.0"
+    "sequelize-cli": "^4.0.0",
+    "validator": "^9.4.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

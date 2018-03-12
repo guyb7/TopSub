@@ -11,7 +11,6 @@ const main = async topic => {
   const data = await t.fetchList()
   const items = t.parseList(data)
 
-  
   // Filter existing
   const ids = await DB.models.Results.findAll({ attributes: ['externalId'] }).map(r => r.externalId)
   const existingIds = new Set(ids)

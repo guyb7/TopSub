@@ -176,7 +176,7 @@ class SubscribeForm extends React.Component {
       })
       return
     }
-    const tzHoursOffset = -(new Date().getTimezoneOffset() / 60)
+    const tzHoursOffset = Math.round(-(new Date().getTimezoneOffset() / 60))
     const form = {
       ...this.props.form,
       frequency: this.state.frequency,
