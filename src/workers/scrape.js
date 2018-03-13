@@ -55,6 +55,16 @@ const main = async topic => {
   await DB.close()
 }
 
-console.log(process.argv)
-process.exit()
-main('hackernews')
+function getTopic() {
+  for (let i in process.argv) {
+    const next = Number(i) + 1
+    if (process.argv[i] === '--topic' && process.argv[next]) {
+      return process.argv[next]
+    }
+  }
+  console.log('No topic provided. Use --topic yourtopicid')
+  process.exit()
+}
+
+const topic = getTopic()
+main(topic)
