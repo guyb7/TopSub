@@ -19,7 +19,12 @@ const styles = theme => {
       },
       ...theme.utils.container
     },
-    title: theme.typography.title
+    title: theme.typography.title,
+    beta: {
+      color: theme.palette.custom.blueSea,
+      fontWeight: 300,
+      fontSize: 12
+    }
   }
 }
 
@@ -55,7 +60,7 @@ class NavBar extends React.Component {
     return (
       <div className={classes.root} with-border={this.props.withBorder ? 'true' : 'false'}>
         <div className={classes.title}>
-          TopSub
+          TopSub <span className={classes.beta}>beta</span>
         </div>
         {
           this.props.user.id &&

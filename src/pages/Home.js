@@ -31,6 +31,19 @@ const styles = theme => {
       flexDirection: 'column',
       alignItems: 'center',
       padding: theme.spacing.quad
+    },
+    about: {
+      ...theme.utils.container,
+      maxWidth: theme.breakpoints.values.sm,
+      padding: theme.spacing.unit,
+      [theme.breakpoints.up('sm')]: {
+      },
+      '& h2': {
+        textAlign: 'center',
+        fontWeight: 300,
+        paddingTop: theme.spacing.quad,
+        paddingBottom: theme.spacing.double,
+      }
     }
   }
 }
@@ -99,6 +112,15 @@ class Home extends React.Component {
             }
           </div>
           <SubscribeForm form={this.state.form} />
+        </div>
+        <div className={classes.about}>
+          <h2>What is TopSub?</h2>
+          <p>
+            TopSub is a simple service that sends you emails for a search query.
+          </p>
+          <p>
+            TopSub scrapes popular sites and allows you to create your own newsletter, without all the marketing.
+          </p>
         </div>
         <Footer />
       </div>

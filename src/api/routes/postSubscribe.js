@@ -79,7 +79,7 @@ export default async req => {
     schedule,
     email
   })
-  console.log(subscription.dataValues.id)
+  const subscriptionId = subscription.dataValues.id
   return {
     success: true
   }
