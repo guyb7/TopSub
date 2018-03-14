@@ -3,9 +3,14 @@ import getStatus from './getStatus'
 import getSearch from './getSearch'
 import getTopics from './getTopics'
 import postSubscribe from './postSubscribe'
+import postRegister from './postRegister'
 import { notFound, parseError, serverError } from './Errors'
 
 const isAdmin = async req => {
+  throw new Error('not-authorized')
+}
+
+const isLoggedIn = async req => {
   throw new Error('not-authorized')
 }
 
@@ -34,11 +39,26 @@ const ensureAdmin = (req, res, next) => {
   })
 }
 
+const ensureLoggedIn = (req, res, next) => {
+  isLoggedIn(req)
+  .then(() => {
+    next()
+  })
+  .catch(e => {
+    next(e)
+  })
+}
+
 export default app => {
   app.get ('/api/status', asyncMiddleware(getStatus))
   app.get ('/api/search', asyncMiddleware(getSearch))
   app.get ('/api/topics', asyncMiddleware(getTopics))
   app.post('/api/subscribe', asyncMiddleware(postSubscribe))
+
+  app.post('/api/register', asyncMiddleware(postRegister))
+  app.get ('/api/logout', asyncMiddleware(getStatus))
+  app.post('/api/login', ensureLoggedIn, asyncMiddleware(getStatus))
+  app.get ('/api/profile', ensureLoggedIn, asyncMiddleware(getStatus))
 
   app.use('/api/admin/*', ensureAdmin)
 

@@ -20,6 +20,14 @@ export default sequelize => {
     passwordHash: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    emailToken: {
+      type: Sequelize.STRING
+    },
+    isVerified: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
     }
   }, {
     paranoid: true,
