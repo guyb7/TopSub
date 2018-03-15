@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import uuid from 'uuid/v4'
+import _ from 'lodash'
 
 import DB from '../../../DB/'
 
@@ -25,8 +26,8 @@ const findUser = async ({ email, emailToken, isVerified=true }) => {
   const results = await DB.models.Users.findAll({
     where: {
       email,
-      emailToken,
-      isVerified: isVerified === null || typeof isVerified === 'undefined' ? false : true,
+      ...(typeof emailToken === 'undefined' ? {} : { emailToken }),
+      isVerified: isVerified === null ? false : isVerified,
       deletedAt: null
     },
     limit: 1
@@ -100,6 +101,7 @@ const login = async({ email, password }) => {
     if (!isPassCorrect) {
       throw new Error('invalid-credentials')
     }
+    return _.pick(user.dataValues, ['id', 'name', 'email'])
   } catch (e) {
     throw e
   }

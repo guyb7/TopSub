@@ -13,6 +13,11 @@ const isAdmin = async req => {
 }
 
 const isLoggedIn = async req => {
+  if (req.session && req.session.isLoggedIn === true) {
+    return true
+  }
+  req.session.isLoggedIn = false
+  req.session.save()
   throw new Error('not-authorized')
 }
 
@@ -59,7 +64,7 @@ export default app => {
 
   app.post('/api/register', asyncMiddleware(postRegister))
   app.post('/api/validate', asyncMiddleware(postValidate))
-  app.post('/api/login', ensureLoggedIn, asyncMiddleware(postLogin))
+  app.post('/api/login', asyncMiddleware(postLogin))
   app.get ('/api/logout', asyncMiddleware(getStatus))
   app.get ('/api/profile', ensureLoggedIn, asyncMiddleware(getStatus))
 

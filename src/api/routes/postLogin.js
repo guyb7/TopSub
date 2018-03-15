@@ -21,7 +21,10 @@ export default async req => {
   }
 
   try {
-    await User.login(params)
+    const user = await User.login(params)
+    req.session.user = user
+    req.session.isLoggedIn = true
+    req.session.save()
     return {
       success: true
     }
