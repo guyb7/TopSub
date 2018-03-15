@@ -21,10 +21,11 @@ const createUser = async (name, email, password, emailToken) => {
   }
 }
 
-const findUser = async ({ email }) => {
+const findUser = async ({ email, emailToken }) => {
   const results = await DB.models.Users.findAll({
     where: {
       email,
+      emailToken,
       deletedAt: null
     },
     limit: 1
@@ -32,7 +33,7 @@ const findUser = async ({ email }) => {
   if (results.length !== 1) {
     throw new Error('user-not-found')
   }
-  return results[0].dataValues
+  return results[0]
 }
 
 const sendVerificationEmail = async (email, emailToken) => {
@@ -40,18 +41,18 @@ const sendVerificationEmail = async (email, emailToken) => {
   console.log('emailToken', emailToken)
 }
 
-const register = async form => {
+const register = async params => {
   const {
     name,
     email,
     password
-  } = form
+  } = params
   let emailToken
 
   // Check if the user already exists
   try {
     const user = await findUser({ email })
-    if (user.isVerified) {
+    if (user.dataValues.isVerified) {
       throw new Error('user-already-exists')
     }
     // Will resend the verification email
@@ -66,10 +67,32 @@ const register = async form => {
     }
   }
 
-  // Send verification email
   await sendVerificationEmail(email, emailToken)
 }
 
+const validate = async params => {
+  const {
+    email,
+    emailToken
+  } = params
+
+  let user
+  try {
+    user = await findUser({ email, emailToken })
+  } catch (e) {
+    throw e
+  }
+
+  if (user.dataValues.isVerified) {
+    throw new Error('user-already-verified')
+  }
+
+  await user.update({
+    isVerified: true
+  })
+}
+
 export default {
-  register
+  register,
+  validate
 }

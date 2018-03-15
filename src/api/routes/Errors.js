@@ -26,6 +26,21 @@ const errors = {
     id: 13,
     code: 400,
     message: 'The provided parameters are invalid'
+  },
+  'user-not-found': {
+    id: 14,
+    code: 404,
+    message: 'User not found'
+  },
+  'user-already-exists': {
+    id: 15,
+    code: 400,
+    message: 'User already exists'
+  },
+  'user-already-verified': {
+    id: 15,
+    code: 400,
+    message: 'User already verified'
   }
 }
 

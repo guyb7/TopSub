@@ -4,6 +4,7 @@ import getSearch from './getSearch'
 import getTopics from './getTopics'
 import postSubscribe from './postSubscribe'
 import postRegister from './postRegister'
+import postValidate from './postValidate'
 import { notFound, parseError, serverError } from './Errors'
 
 const isAdmin = async req => {
@@ -56,6 +57,7 @@ export default app => {
   app.post('/api/subscribe', asyncMiddleware(postSubscribe))
 
   app.post('/api/register', asyncMiddleware(postRegister))
+  app.post('/api/validate', asyncMiddleware(postValidate))
   app.get ('/api/logout', asyncMiddleware(getStatus))
   app.post('/api/login', ensureLoggedIn, asyncMiddleware(getStatus))
   app.get ('/api/profile', ensureLoggedIn, asyncMiddleware(getStatus))
