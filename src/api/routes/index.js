@@ -5,6 +5,7 @@ import getTopics from './getTopics'
 import postSubscribe from './postSubscribe'
 import postRegister from './postRegister'
 import postValidate from './postValidate'
+import postLogin from './postLogin'
 import { notFound, parseError, serverError } from './Errors'
 
 const isAdmin = async req => {
@@ -58,8 +59,8 @@ export default app => {
 
   app.post('/api/register', asyncMiddleware(postRegister))
   app.post('/api/validate', asyncMiddleware(postValidate))
+  app.post('/api/login', ensureLoggedIn, asyncMiddleware(postLogin))
   app.get ('/api/logout', asyncMiddleware(getStatus))
-  app.post('/api/login', ensureLoggedIn, asyncMiddleware(getStatus))
   app.get ('/api/profile', ensureLoggedIn, asyncMiddleware(getStatus))
 
   app.use('/api/admin/*', ensureAdmin)

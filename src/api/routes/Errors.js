@@ -41,6 +41,11 @@ const errors = {
     id: 15,
     code: 400,
     message: 'User already verified'
+  },
+  'invalid-credentials': {
+    id: 16,
+    code: 400,
+    message: 'Invalid credentials'
   }
 }
 

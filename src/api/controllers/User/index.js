@@ -21,11 +21,12 @@ const createUser = async (name, email, password, emailToken) => {
   }
 }
 
-const findUser = async ({ email, emailToken }) => {
+const findUser = async ({ email, emailToken, isVerified=true }) => {
   const results = await DB.models.Users.findAll({
     where: {
       email,
       emailToken,
+      isVerified: isVerified === null || typeof isVerified === 'undefined' ? false : true,
       deletedAt: null
     },
     limit: 1
@@ -51,7 +52,7 @@ const register = async params => {
 
   // Check if the user already exists
   try {
-    const user = await findUser({ email })
+    const user = await findUser({ email, isVerified: null })
     if (user.dataValues.isVerified) {
       throw new Error('user-already-exists')
     }
@@ -78,7 +79,7 @@ const validate = async params => {
 
   let user
   try {
-    user = await findUser({ email, emailToken })
+    user = await findUser({ email, emailToken, isVerified: false })
   } catch (e) {
     throw e
   }
@@ -92,7 +93,20 @@ const validate = async params => {
   })
 }
 
+const login = async({ email, password }) => {
+  try {
+    const user = await findUser({ email })
+    const isPassCorrect = await bcrypt.compare(password, user.dataValues.passwordHash)
+    if (!isPassCorrect) {
+      throw new Error('invalid-credentials')
+    }
+  } catch (e) {
+    throw e
+  }
+}
+
 export default {
   register,
-  validate
+  validate,
+  login
 }
