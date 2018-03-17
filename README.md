@@ -30,6 +30,11 @@ To run a local DB in a docker container, make sure you're logged in to docker wi
 
 To remove the container run `yarn db:rm`.
 
+Connect to the DB:
+```
+docker run -it --rm --link topsub-postgres:postgres postgres psql -h postgres -U postgres
+```
+
 Sync DB with:
 ```
 yarn sequelize db:migrate --config src/DB/config.js

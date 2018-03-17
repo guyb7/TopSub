@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
-import { setUser } from '../store/actions'
 
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
@@ -52,12 +51,6 @@ const buttonStyles = theme => {
 const StyledButton = withStyles(buttonStyles)(Button)
 
 class NavBar extends React.Component {
-  setUserId = () => {
-    this.props.setUser({
-      id: Math.round(Math.random() * 1000)
-    })
-  }
-
   render() {
     const { classes } = this.props
     return (
@@ -95,17 +88,8 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    setUser(user) {
-      dispatch(setUser(user))
-    }
-  }
-}
-
 const connectedNavBar = connect(
-  mapStateToProps,
-  mapDispatchToProps  
+  mapStateToProps
 )(NavBar)
 
 export default withStyles(styles)(connectedNavBar)

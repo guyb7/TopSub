@@ -18,6 +18,7 @@ const Theme = createMuiTheme({
       brownLight: '#DAD5B7',
       brown: '#C2B79B',
       brownDark: '#665E52',
+      red: '#e53935',
       green: '#4caf50'
     }
   },

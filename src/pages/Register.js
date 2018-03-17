@@ -107,7 +107,8 @@ class Register extends React.Component {
     }
   }
 
-  submit = () => {
+  submit = e => {
+    e.preventDefault()
     if (this.validateForm() === false) {
       return
     }
@@ -155,7 +156,7 @@ class Register extends React.Component {
           <h3 className={classes.title}>Create a new account</h3>
           {
             this.state.isDone === false &&
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={this.submit}>
               <TextField
                 label="Email"
                 type="email"
@@ -185,6 +186,7 @@ class Register extends React.Component {
               <Button
                 variant="raised"
                 color="primary"
+                type="submit"
                 className={classes.button}
                 onClick={this.submit}
                 disabled={this.state.isLoading}

@@ -26,7 +26,8 @@ export default async req => {
     req.session.isLoggedIn = true
     req.session.save()
     return {
-      success: true
+      success: true,
+      user
     }
   } catch (e) {
     throw e
