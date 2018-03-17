@@ -43,6 +43,11 @@ const sendVerificationEmail = async (email, emailToken) => {
   console.log('emailToken', emailToken)
 }
 
+const sendPasswordRecoveryEmail = async (email, emailToken) => {
+  console.log('email', email)
+  console.log('emailToken', emailToken)
+}
+
 const register = async params => {
   const {
     name,
@@ -90,8 +95,26 @@ const validate = async params => {
   }
 
   await user.update({
-    isVerified: true
+    isVerified: true,
+    emailToken: null
   })
+}
+
+const recoverPassword = async params => {
+  const { email } = params
+
+  let user
+  try {
+    user = await findUser({ email })
+  } catch (e) {
+    throw e
+  }
+
+  const emailToken = uuid()
+  await user.update({
+    emailToken
+  })
+  sendPasswordRecoveryEmail(email, emailToken)
 }
 
 const login = async({ email, password }) => {
@@ -110,5 +133,6 @@ const login = async({ email, password }) => {
 export default {
   register,
   validate,
-  login
+  login,
+  recoverPassword
 }
