@@ -19,7 +19,10 @@ const styles = theme => {
       },
       ...theme.utils.container
     },
-    title: theme.typography.title,
+    title: {
+      ...theme.typography.title,
+      textDecoration: 'none'
+    },
     beta: {
       color: theme.palette.custom.blueSea,
       fontWeight: 300,
@@ -59,9 +62,9 @@ class NavBar extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root} with-border={this.props.withBorder ? 'true' : 'false'}>
-        <div className={classes.title}>
+        <Link className={classes.title} to='/'>
           TopSub <span className={classes.beta}>beta</span>
-        </div>
+        </Link>
         {
           this.props.user.id &&
           <div className={classes.user}>
@@ -73,10 +76,10 @@ class NavBar extends React.Component {
         {
           !this.props.user.id &&
           <div>
-            <StyledButton to='/sign-up' component={Link}>
+            <StyledButton to='/register' component={Link}>
               Sign Up
             </StyledButton>
-            <StyledButton to='/login' onClick={this.setUserId}>
+            <StyledButton to='/login' component={Link}>
               Login
             </StyledButton>
           </div>

@@ -7,7 +7,8 @@ import Reboot from 'material-ui/Reboot'
 import { withStyles } from 'material-ui/styles'
 
 import Home from './pages/Home'
-import SearchResults from './pages/SearchResults'
+import Register from './pages/Register'
+import Login from './pages/Login'
 import Theme from './Theme'
 
 import store from './store'
@@ -31,7 +32,8 @@ class App extends React.Component {
           <div className={classes.root}>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/search" component={SearchResults} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
             </Switch>
           </div>
         </MuiThemeProvider>

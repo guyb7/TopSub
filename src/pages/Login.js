@@ -15,7 +15,7 @@ const styles = theme => {
   }
 }
 
-class SearchResults extends React.Component {
+class Login extends React.Component {
   navHome = () => {
     this.props.history.push('/')
   }
@@ -24,9 +24,9 @@ class SearchResults extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <NavBar />
+        <NavBar withBorder />
         <div className={classes.container}>
-          <h3>Search results</h3>
+          <h3>Register</h3>
           <Button onClick={this.navHome}>
             Back home
           </Button>
@@ -36,4 +36,4 @@ class SearchResults extends React.Component {
   }
 }
 
-export default withStyles(styles)(SearchResults)
+export default withStyles(styles)(Login)

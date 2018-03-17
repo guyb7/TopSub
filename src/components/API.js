@@ -13,7 +13,7 @@ const handleRequest = (method, route, params) => {
     })
     .catch(e => {
       if (_has(e, 'response.data.error')) {
-        reject(new Error(e.response.data.error.text))
+        reject(new Error(e.response.data.error.message))
       } else {
         reject(e)
       }

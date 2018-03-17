@@ -17,7 +17,8 @@ const Theme = createMuiTheme({
       blueSea: '#3A5F6F',
       brownLight: '#DAD5B7',
       brown: '#C2B79B',
-      brownDark: '#665E52'
+      brownDark: '#665E52',
+      green: '#4caf50'
     }
   },
   spacing: {
