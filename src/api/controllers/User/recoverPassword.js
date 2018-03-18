@@ -1,10 +1,16 @@
 import uuid from 'uuid/v4'
 
 import findUser from './findUser'
+import Email from '../Email/'
 
 const sendPasswordRecoveryEmail = async (email, emailToken) => {
-  console.log('email', email)
-  console.log('emailToken', emailToken)
+  Email.send({
+    template: 'reset-password',
+    to: email,
+    contenxt: {
+      emailToken
+    }
+  })
 }
 
 export default async params => {

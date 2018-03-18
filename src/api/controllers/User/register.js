@@ -2,10 +2,17 @@ import uuid from 'uuid/v4'
 
 import findUser from './findUser'
 import createUser from './createUser'
+import Email from '../Email/'
 
-const sendVerificationEmail = async (email, emailToken) => {
-  console.log('email', email)
-  console.log('emailToken', emailToken)
+const sendVerificationEmail = async (email, emailToken, name) => {
+  Email.send({
+    template: 'register',
+    to: email,
+    context: {
+      name,
+      emailToken
+    }
+  })
 }
 
 export default async params => {
@@ -34,5 +41,5 @@ export default async params => {
     }
   }
 
-  await sendVerificationEmail(email, emailToken)
+  await sendVerificationEmail(email, emailToken, name)
 }
