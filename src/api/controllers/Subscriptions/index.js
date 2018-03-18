@@ -1,4 +1,5 @@
 import DB from '../../../DB/'
+import Topics from '../Topics/'
 
 const findAll = async ({ email }) => {
   if (typeof email === 'undefined') {
@@ -9,7 +10,10 @@ const findAll = async ({ email }) => {
       email
     }
   })
-  return results
+  return results.map(r => ({
+    ...r.toJSON(),
+    topic: Topics.topicsDict[r.topic].info()
+  }))
 }
 
 export default {

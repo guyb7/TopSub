@@ -136,7 +136,7 @@ class NavBar extends React.Component {
 
   render() {
     const { classes } = this.props
-    let userName = this.props.user.name || this.props.user.email
+    let userName = this.props.user.name || this.props.user.email || ''
     if (userName.length > 20) {
       userName = userName.slice(0,20) + '…'
     }
