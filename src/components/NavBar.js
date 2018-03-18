@@ -31,6 +31,9 @@ const styles = theme => {
       color: theme.palette.custom.blueSea,
       fontWeight: 300,
       fontSize: 12
+    },
+    buttonsPlaceholder: {
+      minHeight: 69
     }
   }
 }
@@ -70,11 +73,15 @@ class NavBar extends React.Component {
   }
 
   checkIfLoggedIn = async () => {
-    try {
-      const response = await API.get('/profile')
-      this.props.setUser(response.data.user)
-    } catch (e) {
-      // Not logged in
+    // null = unknown, false = known to be false
+    if (this.props.user.id === null) {
+      try {
+        const response = await API.get('/profile')
+        this.props.setUser(response.data.user)
+      } catch (e) {
+        this.props.setUser({ id: false })
+        // Not logged in
+      }
     }
     this.setState({
       ...this.state,
@@ -120,7 +127,7 @@ class NavBar extends React.Component {
           TopSub <span className={classes.beta}>beta</span>
         </Link>
         {
-          this.state.isLoading && <div></div>
+          this.state.isLoading && <div className={classes.buttonsPlaceholder}>&nbsp;</div>
         }
         {
           !this.state.isLoading && this.props.user.id &&

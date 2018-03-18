@@ -106,7 +106,7 @@ class Login extends React.Component {
 
   activateAcount = async (email, emailToken) => {
     try {
-      const response = await API.post('/validate', { email, emailToken })
+      await API.post('/validate', { email, emailToken })
       this.setState({
         ...this.state,
         email,
