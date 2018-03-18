@@ -50,9 +50,6 @@ const styles = theme => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        '& div': {
-          display: 'flex'
-        },
         '& svg': {
           marginRight: theme.spacing.unit
         }

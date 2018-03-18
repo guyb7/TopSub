@@ -12,6 +12,16 @@ const styles = theme => {
       height: 24,
       width: 24,
       userSelect: 'none'
+    },
+    wrapper: {
+      display: 'inline-flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      '& > div': {
+        display: 'inline-flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
     }
   }
 }
@@ -23,6 +33,7 @@ class MdIcon extends Component {
       <ReactSVG
         path={this.props.svg}
         className={classes.root}
+        wrapperClassName={classes.wrapper}
         {...this.props}
         />
     )

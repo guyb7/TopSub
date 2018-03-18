@@ -100,7 +100,8 @@ const iconStyles = theme => {
   return {
     root: {
       fill: theme.palette.custom.brownLight,
-      marginRight: theme.spacing.unit
+      marginRight: theme.spacing.unit,
+      marginBottom: 4
     }
   }
 }

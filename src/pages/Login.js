@@ -57,9 +57,6 @@ const styles = theme => {
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: theme.spacing.quad,
-      '& div': {
-        display: 'flex'
-      },
       '& svg': {
         marginRight: theme.spacing.unit
       }

@@ -8,7 +8,12 @@ import Button from 'material-ui/Button'
 import Menu, { MenuItem } from 'material-ui/Menu'
 
 import { setUser } from '../store/actions'
-import API from '../components/API'
+import API from './API'
+import MdIcon from './MdIcon'
+import AccountSvg from 'mdi-svg/svg/account.svg'
+import CheckSvg from 'mdi-svg/svg/check.svg'
+import SubscriptionsSvg from 'mdi-svg/svg/bell.svg'
+import LogoutSvg from 'mdi-svg/svg/logout.svg'
 
 const styles = theme => {
   return {
@@ -34,6 +39,14 @@ const styles = theme => {
     },
     buttonsPlaceholder: {
       minHeight: 69
+    },
+    menuIcon: {
+      fill: theme.palette.grey[600],
+      marginLeft: theme.spacing.unit
+    },
+    menuItemIcon: {
+      fill: theme.palette.grey[900],
+      marginRight: theme.spacing.unit
     }
   }
 }
@@ -121,6 +134,10 @@ class NavBar extends React.Component {
 
   render() {
     const { classes } = this.props
+    let userName = this.props.user.name || this.props.user.email
+    if (userName.length > 20) {
+      userName = userName.slice(0,20) + '…'
+    }
     return (
       <div className={classes.root} with-border={this.props.withBorder ? 'true' : 'false'}>
         <Link className={classes.title} to='/'>
@@ -133,15 +150,27 @@ class NavBar extends React.Component {
           !this.state.isLoading && this.props.user.id &&
           <div className={classes.user}>
             <StyledButton onClick={this.openMenu}>
-              {this.props.user.name || this.props.user.email}
+              {userName}
+              <MdIcon svg={AccountSvg} className={classes.menuIcon} />
             </StyledButton>
             <Menu
               open={this.state.isMenuOpen}
               onClose={this.closeMenu}
               anchorEl={this.state.anchorEl}
+              transitionDuration={0}
             >
-              <MenuItem onClick={this.navTo('/profile')}>Profile</MenuItem>
-              <MenuItem onClick={this.logout}>Logout</MenuItem>
+              <MenuItem onClick={this.navTo('/profile')}>
+                <MdIcon svg={AccountSvg} className={classes.menuItemIcon} />
+                Profile
+              </MenuItem>
+              <MenuItem onClick={this.navTo('/subscriptions')}>
+                <MdIcon svg={SubscriptionsSvg} className={classes.menuItemIcon} />
+                Subscriptions
+              </MenuItem>
+              <MenuItem onClick={this.logout}>
+                <MdIcon svg={LogoutSvg} className={classes.menuItemIcon} />
+                Logout
+              </MenuItem>
             </Menu>
           </div>
         }
