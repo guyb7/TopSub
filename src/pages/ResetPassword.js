@@ -45,28 +45,6 @@ const styles = theme => {
       color: theme.palette.custom.red,
       marginTop: theme.spacing.double,
       marginBottom: theme.spacing.double
-    },
-    done: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      '& h3': {
-        color: theme.palette.custom.green,
-        fontWeight: 500,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        '& div': {
-          display: 'flex'
-        },
-        '& svg': {
-          marginRight: theme.spacing.unit
-        }
-      },
-      '& p': {
-        maxWidth: 400,
-        textAlign: 'center'
-      }
     }
   }
 }

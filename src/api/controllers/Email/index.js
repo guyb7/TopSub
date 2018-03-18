@@ -17,7 +17,7 @@ const templates = {
   }),
   register: context => ({
     subject: `Welcome to TopSub!`,
-    text: `Click here to verify your email: /verify?emailToken=${context.emailToken}`
+    text: `Click here to verify your email: /login?email=${context.email}&emailToken=${context.emailToken}`
   }),
   'reset-password': context => ({
     subject: `Reset your TopSub password`,

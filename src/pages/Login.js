@@ -6,11 +6,14 @@ import { withRouter } from 'react-router'
 
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
+import CheckSvg from 'mdi-svg/svg/check.svg'
 
 import { setUser } from '../store/actions'
 import API from '../components/API'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
+import { getParams } from '../components/Utils'
+import MdIcon from '../components/MdIcon'
 
 const styles = theme => {
   return {
@@ -46,6 +49,21 @@ const styles = theme => {
       marginTop: theme.spacing.double,
       marginBottom: theme.spacing.double
     },
+    success: {
+      color: theme.palette.custom.green,
+      fontSize: 14,
+      fontWeight: 500,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: theme.spacing.quad,
+      '& div': {
+        display: 'flex'
+      },
+      '& svg': {
+        marginRight: theme.spacing.unit
+      }
+    },
     secondaryContainer: {
       display: 'flex',
       justifyContent: 'center',
@@ -65,10 +83,43 @@ class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      isVerifying: true,
+      showVerificationSuccess: false,
       email: '',
       password: '',
       isLoading: false,
       error: false
+    }
+  }
+
+  componentDidMount() {
+    const { email, emailToken } = getParams(this.props.history.location.search)
+    if (email && emailToken) {
+      this.activateAcount(email, emailToken)
+    } else {
+      this.setState({
+        ...this.state,
+        isVerifying: false
+      })
+    }
+  }
+
+  activateAcount = async (email, emailToken) => {
+    try {
+      const response = await API.post('/validate', { email, emailToken })
+      this.setState({
+        ...this.state,
+        email,
+        isVerifying: false,
+        showVerificationSuccess: true
+      })
+    } catch (e) {
+      const errorMessage = e.message || 'Something went wrong'
+      this.setState({
+        ...this.state,
+        isVerifying: false,
+        error: errorMessage
+      })
     }
   }
 
@@ -120,51 +171,61 @@ class Login extends React.Component {
     return (
       <div className={classes.root}>
         <NavBar withBorder />
-        <div className={classes.container}>
-          <h3 className={classes.title}>Log into TopSub</h3>
-          <form className={classes.form} onSubmit={this.submit}>
-            <TextField
-              label="Email"
-              type="email"
-              className={classes.textField}
-              value={this.state.email}
-              onChange={this.handleChange('email')}
-              disabled={this.state.isLoading}
-              />
+        {
+          !this.state.isVerifying &&
+          <div className={classes.container}>
+            <h3 className={classes.title}>Log into TopSub</h3>
+            <form className={classes.form} onSubmit={this.submit}>
+              {
+                this.state.showVerificationSuccess &&
+                <div className={classes.success}>
+                  <MdIcon svg={CheckSvg} />
+                  Your email has been successfully verified
+                </div>
+              }
               <TextField
-              label="Password"
-              type="password"
-              className={classes.textField}
-              value={this.state.password}
-              onChange={this.handleChange('password')}
-              disabled={this.state.isLoading}
-            />
-            {
-              this.state.error &&
-              <div className={classes.error}>
-                {this.state.error}
-              </div>
-            }
-            <Button
-              variant="raised"
-              color="primary"
-              type="submit"
-              className={classes.button}
-              onClick={this.submit}
-              disabled={this.state.isLoading}
-              >
-              Log in
-            </Button>
-          </form>
-          <div className={classes.secondaryContainer}>
-            <Link className={classes.secondary} to='/forgot'>
-              Forgot password
-            </Link>
-            <Link className={classes.secondary} to='/register'>
-              Sign up
-            </Link>
+                label="Email"
+                type="email"
+                className={classes.textField}
+                value={this.state.email}
+                onChange={this.handleChange('email')}
+                disabled={this.state.isLoading}
+                />
+                <TextField
+                label="Password"
+                type="password"
+                className={classes.textField}
+                value={this.state.password}
+                onChange={this.handleChange('password')}
+                disabled={this.state.isLoading}
+              />
+              {
+                this.state.error &&
+                <div className={classes.error}>
+                  {this.state.error}
+                </div>
+              }
+              <Button
+                variant="raised"
+                color="primary"
+                type="submit"
+                className={classes.button}
+                onClick={this.submit}
+                disabled={this.state.isLoading}
+                >
+                Log in
+              </Button>
+            </form>
+            <div className={classes.secondaryContainer}>
+              <Link className={classes.secondary} to='/forgot'>
+                Forgot password
+              </Link>
+              <Link className={classes.secondary} to='/register'>
+                Sign up
+              </Link>
+            </div>
           </div>
-        </div>
+        }
         <Footer />
       </div>
     )

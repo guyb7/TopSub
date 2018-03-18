@@ -10,6 +10,7 @@ const sendVerificationEmail = async (email, emailToken, name) => {
     to: email,
     context: {
       name,
+      email,
       emailToken
     }
   })
