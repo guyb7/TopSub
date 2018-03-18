@@ -11,7 +11,6 @@ import { setUser } from '../store/actions'
 import API from './API'
 import MdIcon from './MdIcon'
 import AccountSvg from 'mdi-svg/svg/account.svg'
-import CheckSvg from 'mdi-svg/svg/check.svg'
 import SubscriptionsSvg from 'mdi-svg/svg/bell.svg'
 import LogoutSvg from 'mdi-svg/svg/logout.svg'
 
@@ -65,6 +64,9 @@ const buttonStyles = theme => {
         color: theme.palette.text.primary,
         borderBottom: '2px solid ' + theme.palette.text.primary,
         backgroundColor: 'transparent'
+      },
+      '&:hover svg': {
+        fill: theme.palette.grey[900]
       }
     }
   }
