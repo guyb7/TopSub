@@ -1,5 +1,7 @@
 import Mailgun from 'mailgun-js'
 
+import { isProd } from '../../../components/Utils'
+
 const api_key = process.env.RAZZLE_MAILGUN_KEY
 const domain = process.env.RAZZLE_MAILGUN_DOMAIN
 
@@ -30,10 +32,13 @@ const send = ({ template, to, context }) => {
     ...(templates[template](context))
   }
 
-  console.log(data)
-  // mailgun.messages().send(data, (error, body) => {
-  //   console.log('email response', body)
-  // })
+  if (isProd) {
+    mailgun.messages().send(data, (error, body) => {
+      console.log('Email result', body)
+    })
+  } else {
+    console.log('[Email]', data)
+  }
 }
 
 export default {
