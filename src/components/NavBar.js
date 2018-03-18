@@ -1,9 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
+import { withRouter } from 'react-router'
 
-import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
+import Button from 'material-ui/Button'
+import Menu, { MenuItem } from 'material-ui/Menu'
+
+import { setUser } from '../store/actions'
+import API from '../components/API'
 
 const styles = theme => {
   return {
@@ -51,6 +56,62 @@ const buttonStyles = theme => {
 const StyledButton = withStyles(buttonStyles)(Button)
 
 class NavBar extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoading: true,
+      isMenuOpen: false,
+      anchorEl: null
+    }
+  }
+
+  componentDidMount() {
+    this.checkIfLoggedIn()
+  }
+
+  checkIfLoggedIn = async () => {
+    try {
+      const response = await API.get('/profile')
+      this.props.setUser(response.data.user)
+    } catch (e) {
+      // Not logged in
+    }
+    this.setState({
+      ...this.state,
+      isLoading: false
+    })
+  }
+
+  openMenu = e => {
+    this.setState({
+      ...this.state,
+      isMenuOpen: true,
+      anchorEl: e.currentTarget
+    })
+  }
+
+  closeMenu = () => {
+    this.setState({
+      ...this.state,
+      isMenuOpen: false,
+      anchorEl: null
+    })
+  }
+
+  navTo = path => () => {
+    this.props.history.push(path)
+  }
+
+  logout = async () => {
+    this.closeMenu()
+    try {
+      await API.get('/logout')
+    } catch (e) {
+    }
+    this.props.setUser({ id: null })
+    this.props.history.push('/')
+  }
+
   render() {
     const { classes } = this.props
     return (
@@ -59,15 +120,26 @@ class NavBar extends React.Component {
           TopSub <span className={classes.beta}>beta</span>
         </Link>
         {
-          this.props.user.id &&
+          this.state.isLoading && <div></div>
+        }
+        {
+          !this.state.isLoading && this.props.user.id &&
           <div className={classes.user}>
-            <StyledButton>
-              ID: {this.props.user.id}
+            <StyledButton onClick={this.openMenu}>
+              {this.props.user.name || this.props.user.email}
             </StyledButton>
+            <Menu
+              open={this.state.isMenuOpen}
+              onClose={this.closeMenu}
+              anchorEl={this.state.anchorEl}
+            >
+              <MenuItem onClick={this.navTo('/profile')}>Profile</MenuItem>
+              <MenuItem onClick={this.logout}>Logout</MenuItem>
+            </Menu>
           </div>
         }
         {
-          !this.props.user.id &&
+          !this.state.isLoading && !this.props.user.id &&
           <div>
             <StyledButton to='/register' component={Link}>
               Sign Up
@@ -88,8 +160,17 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    setUser(user) {
+      dispatch(setUser(user))
+    }
+  }
+}
+
 const connectedNavBar = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(NavBar)
 
-export default withStyles(styles)(connectedNavBar)
+export default withRouter(withStyles(styles)(connectedNavBar))
