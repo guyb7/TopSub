@@ -7,6 +7,7 @@ import postRegister from './postRegister'
 import postValidate from './postValidate'
 import postLogin from './postLogin'
 import postRecoverPassword from './postRecoverPassword'
+import postResetPassword from './postResetPassword'
 import { notFound, parseError, serverError } from './Errors'
 
 const isAdmin = async req => {
@@ -66,8 +67,10 @@ export default app => {
   app.post('/api/register', asyncMiddleware(postRegister))
   app.post('/api/validate', asyncMiddleware(postValidate))
   app.post('/api/recover-password', asyncMiddleware(postRecoverPassword))
+  app.post('/api/reset-password', asyncMiddleware(postResetPassword))
   app.post('/api/login', asyncMiddleware(postLogin))
   app.get ('/api/logout', asyncMiddleware(getStatus))
+
   app.get ('/api/profile', ensureLoggedIn, asyncMiddleware(getStatus))
 
   app.use('/api/admin/*', ensureAdmin)

@@ -23,9 +23,12 @@ const createUser = async (name, email, password, emailToken) => {
 }
 
 const findUser = async ({ email, emailToken, isVerified=true }) => {
+  if (typeof email === 'undefined' && typeof emailToken === 'undefined') {
+    throw new Error('user-not-found')
+  }
   const results = await DB.models.Users.findAll({
     where: {
-      email,
+      ...(typeof email === 'undefined' ? {} : { email }),
       ...(typeof emailToken === 'undefined' ? {} : { emailToken }),
       isVerified: isVerified === null ? false : isVerified,
       deletedAt: null
@@ -117,6 +120,27 @@ const recoverPassword = async params => {
   sendPasswordRecoveryEmail(email, emailToken)
 }
 
+const resetPassword = async params => {
+  const {
+    emailToken,
+    password
+  } = params
+
+  let user
+  try {
+    user = await findUser({ emailToken })
+  } catch (e) {
+    throw e
+  }
+
+  const passwordHash = await bcrypt.hash(password, SALT_ROUNDS)
+  await user.update({
+    passwordHash,
+    emailToken: null
+  })
+  return _.pick(user.dataValues, ['id', 'name', 'email'])
+}
+
 const login = async({ email, password }) => {
   try {
     const user = await findUser({ email })
@@ -134,5 +158,6 @@ export default {
   register,
   validate,
   login,
-  recoverPassword
+  recoverPassword,
+  resetPassword
 }

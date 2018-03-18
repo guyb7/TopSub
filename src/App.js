@@ -10,6 +10,7 @@ import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 import Theme from './Theme'
 
 import store from './store'
@@ -36,7 +37,7 @@ class App extends React.Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/forgot" component={ForgotPassword} />
-              <Route exact path="/reset" component={Login} />
+              <Route exact path="/reset" component={ResetPassword} />
             </Switch>
           </div>
         </MuiThemeProvider>
