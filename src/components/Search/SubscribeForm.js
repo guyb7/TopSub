@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 
 import Button from 'material-ui/Button'
@@ -123,10 +124,21 @@ class SubscribeForm extends React.Component {
       frequency: 'sunday',
       time: 'morning',
       email: '',
+      emailDisabled: false,
       emailError: false,
       isLoading: false,
       isDone: false,
       submitError: false
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.user && props.user.email) {
+      this.setState({
+        ...this.state,
+        email: props.user.email,
+        emailDisabled: true
+      })
     }
   }
 
@@ -264,7 +276,7 @@ class SubscribeForm extends React.Component {
           <TextField
             placeholder='Email'
             type='email'
-            disabled={this.state.isLoading || this.state.isDone}
+            disabled={this.state.emailDisabled || this.state.isLoading || this.state.isDone}
             className={classes.textField}
             value={this.state.email}
             InputProps={{ className: classes.input }}
@@ -301,4 +313,14 @@ class SubscribeForm extends React.Component {
   }
 }
 
-export default withStyles(styles)(SubscribeForm)
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user
+  }
+}
+
+const connectedSubscribeForm = connect(
+  mapStateToProps
+)(SubscribeForm)
+
+export default withStyles(styles)(connectedSubscribeForm)

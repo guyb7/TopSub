@@ -16,6 +16,25 @@ const findAll = async ({ email }) => {
   }))
 }
 
+const deleteOne = async ({ id, email }) => {
+  if (typeof id === 'undefined' || typeof email === 'undefined') {
+    throw new Error('no-such-subscription')
+  }
+  const deleted = await DB.models.Subscriptions.destroy({
+    where: {
+      id,
+      email
+    },
+    limit: 1
+  })
+  if (deleted === 1) {
+    return
+  } else {
+    throw new Error('no-such-subscription')
+  }
+}
+
 export default {
-  findAll
+  findAll,
+  deleteOne
 }

@@ -46,7 +46,12 @@ const errors = {
     id: 16,
     code: 400,
     message: 'Invalid credentials'
-  }
+  },
+  'no-such-subscription': {
+    id: 17,
+    code: 404,
+    message: 'This subscription does not exist'
+  },
 }
 
 const findError = err => {

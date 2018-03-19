@@ -9,6 +9,7 @@ import ExpansionPanel, {
 import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
 
+import API from '../API'
 import MdIcon from '../MdIcon'
 import ChevronDownIcon from 'mdi-svg/svg/chevron-down.svg'
 
@@ -64,11 +65,12 @@ class SubscriptionsItem extends React.Component {
     })
   }
 
-  delete = () => {
-    this.setState({
-      ...this.state,
-      deleteDialogIsOpen: false
-    })
+  delete = async () => {
+    const id = this.props.data.id
+    await API.delete('/subscriptions/' + id)
+    if (this.props.onDelete) {
+      this.props.onDelete(id)
+    }
   }
 
   render() {

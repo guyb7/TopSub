@@ -11,6 +11,7 @@ import postResetPassword from './postResetPassword'
 import getLogout from './getLogout'
 import getProfile from './getProfile'
 import getSubscriptions from './getSubscriptions'
+import deleteSubscription from './deleteSubscription'
 import { notFound, parseError, serverError } from './Errors'
 
 const isAdmin = async req => {
@@ -76,6 +77,7 @@ export default app => {
 
   app.get ('/api/profile', ensureLoggedIn, asyncMiddleware(getProfile))
   app.get ('/api/subscriptions', ensureLoggedIn, asyncMiddleware(getSubscriptions))
+  app.delete('/api/subscriptions/:id', ensureLoggedIn, asyncMiddleware(deleteSubscription))
 
   app.use('/api/admin/*', ensureAdmin)
 
