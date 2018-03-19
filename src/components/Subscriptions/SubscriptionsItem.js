@@ -6,7 +6,7 @@ import ExpansionPanel, {
   ExpansionPanelDetails,
   ExpansionPanelActions
 } from 'material-ui/ExpansionPanel'
-import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
+import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
 
 import API from '../API'
@@ -33,8 +33,9 @@ const styles = theme => {
     },
     sectionTitle: {
       ...theme.typography.subheading,
-      fontWeight: 500,
+      fontWeight: 400,
       borderBottom: `1px solid ${theme.palette.divider}`,
+      marginTop: theme.spacing.big,
       paddingBottom: theme.spacing.unit
     },
     confirmDelete: {
@@ -42,6 +43,46 @@ const styles = theme => {
     }
   }
 }
+
+const itemDataStyles = theme => {
+  return {
+    sourceItems: {
+      display: 'flex',
+      '& > *': {
+        marginRight: theme.spacing.quad
+      }
+    },
+    sourceItemTitle: {
+      ...theme.typography.caption
+    },
+    sourceItemValue: {
+      ...theme.typography.body1
+    }
+  }
+}
+
+class ItemData extends React.Component {
+  render() {
+    const { classes } = this.props
+    return (
+      <div className={classes.sourceItems}>
+        {
+          this.props.items.map(i => 
+            <div>
+              <div className={classes.sourceItemTitle}>
+                {i.title}
+              </div>
+              <div className={classes.sourceItemValue}>
+                {i.value}
+              </div>
+            </div>
+          )
+        }
+      </div>
+    )
+  }
+}
+const StyledItemData = withStyles(itemDataStyles)(ItemData)
 
 class SubscriptionsItem extends React.Component {
   constructor(props) {
@@ -73,8 +114,25 @@ class SubscriptionsItem extends React.Component {
     }
   }
 
+  parseCron = () => {
+    const cron = this.props.data.schedule.split(' ')
+    if (cron.length !== 6) {
+      throw new Error('Invalid cron format')
+    }
+    return {
+      second: cron[0],
+      minute: cron[1],
+      hour: cron[2],
+      monthDay: cron[3],
+      month: cron[4],
+      weekDay: cron[5]
+    }
+  }
+
   render() {
     const { classes, data } = this.props
+    const schedule = this.parseCron()
+    const timezoneStr = data.tzHoursOffset > 0 ? `UTC +${data.tzHoursOffset}` : (data.tzHoursOffset < 0 ? `UTC -${data.tzHoursOffset}` : 'UTC')
     return (
       <div>
         <ExpansionPanel className={classes.root}>
@@ -88,26 +146,26 @@ class SubscriptionsItem extends React.Component {
             </div>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.detailsContainer}>
+            <StyledItemData items={[
+              { title: 'Source', value: data.topic.name },
+              { title: 'Period', value: data.period },
+              { title: 'Count', value: data.limit }
+            ]} />
+            
             <h3 className={classes.sectionTitle}>
-              Source
+              Schedule ({timezoneStr})
             </h3>
-            <p>
-              source, period, count, filter
-            </p>
-            <h3 className={classes.sectionTitle}>
-              Schedule
-            </h3>
-            <p>
-              * * * * * *
-            </p>
-            {JSON.stringify(data)}
+            <StyledItemData items={[
+              { title: 'Minute (0-59)', value: schedule.minute },
+              { title: 'Hour (0-23)', value: schedule.hour },
+              { title: 'Month Day (1-31)', value: schedule.monthDay },
+              { title: 'Month (1-12)', value: schedule.month },
+              { title: 'Week Day (0-7) (0 or 7 is Sun)', value: schedule.weekDay }
+            ]} />
           </ExpansionPanelDetails>
           <ExpansionPanelActions>
             <Button size="small" onClick={this.confirmDelete}>
               Unsubscribe
-            </Button>
-            <Button size="small">
-              Edit
             </Button>
           </ExpansionPanelActions>
         </ExpansionPanel>

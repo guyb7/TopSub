@@ -71,7 +71,7 @@ export default async req => {
     default:
   }
   const schedule = `* * ${utcHour} * * ${weekDay}`
-  const subscription = await DB.models.Subscriptions.create({
+  await DB.models.Subscriptions.create({
     topic,
     limit,
     period,
@@ -79,7 +79,6 @@ export default async req => {
     schedule,
     email
   })
-  const subscriptionId = subscription.dataValues.id
   return {
     success: true
   }
