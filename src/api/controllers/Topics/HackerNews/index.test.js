@@ -18,14 +18,17 @@ describe('HackerNews', () => {
       score: 33,
       time: 1519999999,
       title: 'Story title',
-      url: 'https://www.some-website.com/'
+      url: 'https://www.some-website.com/',
+      descendants: 4
     }
     const output = HackerNews.parseOne(input)
 
-    expect(getType(output.id)).toBe('string')
+    expect(getType(output.externalId)).toBe('string')
     expect(getType(output.score)).toBe('number')
-    expect(getType(output.time)).toBe('number')
-    expect(getType(output.title)).toBe('string')
+    expect(getType(output.time)).toBe('string')
+    expect(getType(output.data.title)).toBe('string')
+    expect(getType(output.data.comments)).toBe('number')
+    expect(getType(output.data.domain)).toBe('string')
     expect(getType(output.url)).toBe('string')
   })
 })

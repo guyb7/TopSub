@@ -49,11 +49,11 @@ class HackerNews extends BaseTopic {
     const domain = this.extractDomain(url)
     return {
       externalId: '' + item.id,
-      score: item.score,
+      score: Number(item.score),
       time: utcTime,
       data: {
         title: item.title,
-        comments: item.descendants,
+        comments: Number(item.descendants),
         domain
       },
       url
