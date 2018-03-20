@@ -12,6 +12,7 @@ import getLogout from './getLogout'
 import getProfile from './getProfile'
 import getSubscriptions from './getSubscriptions'
 import deleteSubscription from './deleteSubscription'
+import getEmail from './getEmail'
 import { notFound, parseError, serverError } from './Errors'
 
 const isAdmin = async req => {
@@ -74,6 +75,8 @@ export default app => {
   app.post('/api/reset-password', asyncMiddleware(postResetPassword))
   app.post('/api/login', asyncMiddleware(postLogin))
   app.get ('/api/logout', asyncMiddleware(getLogout))
+
+  app.get ('/api/emailPreview', getEmail)
 
   app.get ('/api/profile', ensureLoggedIn, asyncMiddleware(getProfile))
   app.get ('/api/subscriptions', ensureLoggedIn, asyncMiddleware(getSubscriptions))

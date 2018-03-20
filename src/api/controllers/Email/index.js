@@ -1,5 +1,9 @@
 import Mailgun from 'mailgun-js'
 
+import BasicTemplate from './Templates/Basic'
+import RegisterTemplate from './Templates/Register'
+import ResetPasswordTemplate from './Templates/ResetPassword'
+
 import { isProd } from '../../../components/Utils'
 
 const api_key = process.env.RAZZLE_MAILGUN_KEY
@@ -11,36 +15,39 @@ const mailgun = Mailgun({
 })
 
 const templates = {
-  basic: context => ({
-    subject: `Hello ${context.name}!`,
-    text: `Testing Mailgun! ${context.name}, ${context.text} :)`
-  }),
-  register: context => ({
-    subject: `Welcome to TopSub!`,
-    text: `Click here to verify your email: /login?email=${context.email}&emailToken=${context.emailToken}`
-  }),
-  'reset-password': context => ({
-    subject: `Reset your TopSub password`,
-    text: `Click here to change your email: /reset?emailToken=${context.emailToken}`
-  })
+  'basic': BasicTemplate,
+  'register': RegisterTemplate,
+  'reset-password': ResetPasswordTemplate
 }
 
 const send = ({ template, to, context }) => {
-  const data = {
-    from: 'Mailgun Sandbox <postmaster@sandbox608e7943283b44b68992a618476f81c3.mailgun.org>',
-    to,
-    ...(templates[template](context))
+  if (typeof templates[template] === 'undefined') {
+    throw new Error('no-such-template')
   }
 
   if (isProd) {
+    const data = {
+      from: 'Mailgun Sandbox <postmaster@sandbox608e7943283b44b68992a618476f81c3.mailgun.org>',
+      to,
+      ...(templates[template](context))
+    }
     mailgun.messages().send(data, (error, body) => {
       console.log('Email result', body)
     })
   } else {
-    console.log('[Email]', data)
+    console.log('[Email]', template, context)
+    console.log(templates[template](context).html)
   }
 }
 
+const preview = req => {
+  const template = req.query.template
+  const context = { ...req.query }
+  const data = templates[template](context)
+  return data.html
+}
+
 export default {
-  send
+  send,
+  preview
 }
