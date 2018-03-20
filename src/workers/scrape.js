@@ -35,22 +35,21 @@ const main = async topic => {
 
   // Store data
   console.log('[Storing]', itemsToStore.length)
-  const storeJobs = itemsToStore.map(item => {
-    return new Promise(resolve => {
-      DB.models.Results.create({
-        topic,
-        externalId: item.externalId,
-        score: item.score,
-        publishTime: item.time,
-        url: item.url,
-        data: item.data
-      })
-      .then(resolve)
-    }, reject => {
-      reject()
+  const storeJobs = itemsToStore.map(async item => {
+    await DB.models.Results.create({
+      topic,
+      externalId: item.externalId,
+      score: item.score,
+      publishTime: item.time,
+      url: item.url,
+      data: item.data
     })
   })
-  await Promise.all(storeJobs)
+  try {
+    await Promise.all(storeJobs)
+  } catch (e) {
+    console.error(e)
+  }
 
   await DB.close()
 }

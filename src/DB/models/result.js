@@ -22,7 +22,7 @@ export default sequelize => {
       type: Sequelize.DATE
     },
     url: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(1024),
       validate: {
         isUrl: true
       }
