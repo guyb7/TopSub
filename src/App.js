@@ -3,7 +3,7 @@ import Route from 'react-router-dom/Route'
 import Switch from 'react-router-dom/Switch'
 import { Provider } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import Reboot from 'material-ui/Reboot'
+import CssBaseline from 'material-ui/CssBaseline'
 import { withStyles } from 'material-ui/styles'
 
 import Home from './pages/Home'
@@ -31,7 +31,7 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <MuiThemeProvider theme={Theme}>
-          <Reboot />
+          <CssBaseline />
           <div className={classes.root}>
             <Switch>
               <Route exact path="/" component={Home} />

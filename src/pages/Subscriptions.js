@@ -86,6 +86,7 @@ class Subscriptions extends React.Component {
               {this.state.error}
             </div>
           }
+          <div>
           {
             this.state.subscriptions.map(i =>
               <SubscriptionsItem
@@ -95,6 +96,7 @@ class Subscriptions extends React.Component {
                 />
             )
           }
+          </div>
         </div>
         <Footer />
       </div>

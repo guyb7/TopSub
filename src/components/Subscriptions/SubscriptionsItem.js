@@ -68,7 +68,7 @@ class ItemData extends React.Component {
       <div className={classes.sourceItems}>
         {
           this.props.items.map(i => 
-            <div>
+            <div key={i.title}>
               <div className={classes.sourceItemTitle}>
                 {i.title}
               </div>
@@ -134,7 +134,7 @@ class SubscriptionsItem extends React.Component {
     const schedule = this.parseCron()
     const timezoneStr = data.tzHoursOffset > 0 ? `UTC +${data.tzHoursOffset}` : (data.tzHoursOffset < 0 ? `UTC -${data.tzHoursOffset}` : 'UTC')
     return (
-      <div>
+      <React.Fragment>
         <ExpansionPanel className={classes.root}>
           <ExpansionPanelSummary expandIcon={<MdIcon svg={ChevronDownIcon} />}>
             <div className={classes.title}>
@@ -187,7 +187,7 @@ class SubscriptionsItem extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </div>
+      </React.Fragment>
     )
   }
 }
