@@ -2,7 +2,7 @@ import Juice from 'juice'
 
 import css from '../css'
 
-const ROOT_URL = 'http://localhost:3010'
+const ROOT_URL = process.env.RAZZLE_ROOT_URL
 
 const html = context => `
 <!doctype html>
@@ -84,8 +84,6 @@ const html = context => `
   </body>
 </html>
 `
-
-
 
 export default context => {
   const finalHtml = Juice.inlineContent(html(context), css)

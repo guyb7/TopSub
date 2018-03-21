@@ -3,11 +3,13 @@ import uuid from 'uuid/v4'
 import findUser from './findUser'
 import Email from '../Email/'
 
-const sendPasswordRecoveryEmail = async (email, emailToken) => {
+const sendPasswordRecoveryEmail = async ({ email, emailToken, name }) => {
   Email.send({
     template: 'reset-password',
     to: email,
-    contenxt: {
+    context: {
+      name,
+      email,
       emailToken
     }
   })
@@ -27,5 +29,5 @@ export default async params => {
   await user.update({
     emailToken
   })
-  sendPasswordRecoveryEmail(email, emailToken)
+  sendPasswordRecoveryEmail({ email, emailToken, name: user.dataValues.name })
 }

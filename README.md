@@ -8,6 +8,7 @@ Subscribe to search results
 ```
 NODE_ENV=development
 PORT=3010
+RAZZLE_ROOT_URL=http://localhost:3010
 
 RAZZLE_PG_HOST=127.0.0.1
 RAZZLE_PG_PORT=5444

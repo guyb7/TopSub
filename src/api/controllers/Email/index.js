@@ -1,6 +1,5 @@
 import Mailgun from 'mailgun-js'
 
-import BasicTemplate from './Templates/Basic'
 import RegisterTemplate from './Templates/Register'
 import ResetPasswordTemplate from './Templates/ResetPassword'
 
@@ -15,7 +14,6 @@ const mailgun = Mailgun({
 })
 
 const templates = {
-  'basic': BasicTemplate,
   'register': RegisterTemplate,
   'reset-password': ResetPasswordTemplate
 }
