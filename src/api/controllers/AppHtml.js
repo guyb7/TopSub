@@ -14,11 +14,16 @@ export default ({ appMarkup }) => {
     <title>TopSub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
     ${cssTag}
     ${jsTag}
   </head>
   <body>
-    <div id="root">${appMarkup}</div>
+    <div id="root" class="hidden">${appMarkup}</div>
   </body>
 </html>`
 

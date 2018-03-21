@@ -26,6 +26,10 @@ const styles = theme => {
 }
 
 class App extends React.Component {
+  componentDidMount() {
+    document.getElementById('root').classList.remove('hidden')
+  }
+
   render() {
     const { classes } = this.props
     return (
