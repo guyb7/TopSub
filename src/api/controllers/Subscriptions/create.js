@@ -14,13 +14,13 @@ const generateSchedule = ({ tzHoursOffset, frequency, time }) => {
       weekDay = [0, 1, 2, 3, 4, 5, 6]
       break
     case 'sunday':
-      weekDay = 0
+      weekDay = [0]
       break
     case 'monday':
-      weekDay = 1
+      weekDay = [1]
       break
     case 'friday':
-      weekDay = 6
+      weekDay = [6]
       break
     default:
   }

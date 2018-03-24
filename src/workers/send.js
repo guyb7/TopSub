@@ -20,19 +20,16 @@ const releaseSingletonLock = async () => {
 const getCurrentTime = () => {
   return {
     minute: 0,
-    hour: 4,
-    monthDay: 24,
-    month: 3,
-    year: 2018
+    hour: 8,
+    weekDay: 0,
+    // monthDay: 24,
+    // month: 3,
+    // year: 2018
   }
 }
 
 const getSubscribers = async ({ topic, period, currentTime }) => {
-  return [
-      { email: 'a@a.com', limit: 3 },
-      { email: 'b@b.com', limit: 5 },
-      { email: 'c@c.com', limit: 10 }
-    ]
+  return await Subscriptions.findSubscribers({ topic, period, time: currentTime })
 }
 
 const sendEmails = async mailJobs => {
@@ -43,14 +40,6 @@ const main = async topic => {
   await DB.init()
 
   await checkSingletonLock()
-
-  const results = await DB.models.Schedules.findAll({
-    where: {
-      subscriptionId: 1
-    }
-  })
-  console.log(results)
-  process.exit()
 
   const topicsList = await Topics.list()
   const periods = Results.periods

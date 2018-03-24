@@ -1,18 +1,40 @@
 import DB from '../../../DB/'
-import Topics from '../Topics/'
 
-export default async ({ topic, period }) => {
+export default async ({ topic, period, time }) => {
   if (typeof topic === 'undefined' || typeof period === 'undefined') {
     return []
   }
-  const results = await DB.models.Subscriptions.findAll({
+  const Op = DB.sequelize.Op
+  const results = await DB.models.Schedules.findAll({
+    include: [
+      {
+        model: DB.models.Subscriptions,
+        as: 'subscription',
+        required: true,
+        where: {
+          topic,
+          period
+        }
+      }
+   ],
     where: {
-      topic,
-      period
+      minutes: {
+        [Op.contains]: [time.minute]
+      },
+      hours: {
+        [Op.contains]: [time.hour]
+      },
+      weekDay: {
+        [Op.contains]: [time.weekDay]
+      }
     }
   })
   return results.map(r => ({
-    ...r.toJSON(),
-    topic: Topics.topicsDict[r.topic].info()
+    ...r.dataValues.subscription.dataValues,
+    schedule: {
+      minutes: r.dataValues.minutes,
+      hours: r.dataValues.hours,
+      weekDay: r.dataValues.weekDay
+    }
   }))
 }

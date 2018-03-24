@@ -115,17 +115,14 @@ class SubscriptionsItem extends React.Component {
   }
 
   parseCron = () => {
-    const cron = this.props.data.schedule.split(' ')
-    if (cron.length !== 6) {
-      throw new Error('Invalid cron format')
-    }
+    const schedule = this.props.data.schedule
     return {
-      second: cron[0],
-      minute: cron[1],
-      hour: cron[2],
-      monthDay: cron[3],
-      month: cron[4],
-      weekDay: cron[5]
+      second: 0,
+      minute: schedule.minutes.join(', '),
+      hour: schedule.hours.join(', '),
+      monthDay: 0,
+      month: 0,
+      weekDay: schedule.weekDay.join(', ')
     }
   }
 
@@ -160,7 +157,7 @@ class SubscriptionsItem extends React.Component {
               { title: 'Hour (0-23)', value: schedule.hour },
               { title: 'Month Day (1-31)', value: schedule.monthDay },
               { title: 'Month (1-12)', value: schedule.month },
-              { title: 'Week Day (0-7) (0 or 7 is Sun)', value: schedule.weekDay }
+              { title: 'Week Day (0-6) (0 is Sun)', value: schedule.weekDay }
             ]} />
           </ExpansionPanelDetails>
           <ExpansionPanelActions>
