@@ -1,6 +1,7 @@
 import '../../env'
-import DB from '../DB/'
+import moment from 'moment'
 
+import DB from '../DB/'
 import Results from '../api/controllers/Results/'
 import Subscriptions from '../api/controllers/Subscriptions/'
 import Topics from '../api/controllers/Topics/'
@@ -18,13 +19,26 @@ const releaseSingletonLock = async () => {
 }
 
 const getCurrentTime = () => {
+  const now = moment().utc()
+  let minute = now.minute()
+  let hour = now.hour()
+  let weekDay = now.day()
+  for (let i in process.argv) {
+    const next = Number(i) + 1
+    if (process.argv[i] === '--minute' && process.argv[next]) {
+      minute = Number(process.argv[next])
+    }
+    if (process.argv[i] === '--hour' && process.argv[next]) {
+      hour = Number(process.argv[next])
+    }
+    if (process.argv[i] === '--weekDay' && process.argv[next]) {
+      weekDay = Number(process.argv[next])
+    }
+  }
   return {
-    minute: 0,
-    hour: 8,
-    weekDay: 0,
-    // monthDay: 24,
-    // month: 3,
-    // year: 2018
+    minute,
+    hour,
+    weekDay
   }
 }
 
@@ -65,7 +79,8 @@ const main = async topic => {
       }
     }
   }
-
+  
+  console.log('Sending emails to subscribers at', currentTime)
   await sendEmails(mailJobs)
 
   await releaseSingletonLock()
