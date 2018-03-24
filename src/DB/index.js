@@ -1,12 +1,14 @@
 import Sequelize from 'sequelize'
 
 import Result from './models/result'
+import Schedule from './models/schedule'
 import Subscription from './models/subscription'
 import User from './models/user'
 
 const modelsDefinitions = [
   Result,
   Subscription,
+  Schedule,
   User
 ]
 

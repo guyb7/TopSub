@@ -44,6 +44,14 @@ const main = async topic => {
 
   await checkSingletonLock()
 
+  const results = await DB.models.Schedules.findAll({
+    where: {
+      subscriptionId: 1
+    }
+  })
+  console.log(results)
+  process.exit()
+
   const topicsList = await Topics.list()
   const periods = Results.periods
   const limit = 10
