@@ -2,6 +2,7 @@ import Mailgun from 'mailgun-js'
 
 import RegisterTemplate from './Templates/Register'
 import ResetPasswordTemplate from './Templates/ResetPassword'
+import SubscriptionTemplate from './Templates/Subscription'
 
 import { isProd } from '../../../components/Utils'
 
@@ -15,7 +16,8 @@ const mailgun = Mailgun({
 
 const templates = {
   'register': RegisterTemplate,
-  'reset-password': ResetPasswordTemplate
+  'reset-password': ResetPasswordTemplate,
+  'subscription': SubscriptionTemplate
 }
 
 const send = ({ template, to, context }) => {

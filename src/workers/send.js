@@ -1,10 +1,13 @@
 import '../../env'
 import moment from 'moment'
+import _ from 'lodash'
 
 import DB from '../DB/'
 import Results from '../api/controllers/Results/'
 import Subscriptions from '../api/controllers/Subscriptions/'
 import Topics from '../api/controllers/Topics/'
+import EmailRender from '../components/EmailRender/'
+import Email from '../api/controllers/Email/'
 
 const checkSingletonLock = async () => {
   //TODO Check if another instance is running
@@ -47,7 +50,19 @@ const getSubscribers = async ({ topic, period, currentTime }) => {
 }
 
 const sendEmails = async mailJobs => {
-  console.log(JSON.stringify(mailJobs.map(j => ({ ...j, results: j.results.length })), null, 2))
+  _.each(mailJobs, j => {
+    const component = Topics.topicsDict[j.topic]
+    const markup = EmailRender({ component, results: j.results })
+    Email.send({
+      template: 'subscription',
+      to: j.email,
+      context: {
+        content: markup
+      }
+    })
+    // console.log(j)
+    // console.log(markup)
+  })
 }
 
 const main = async topic => {
@@ -79,7 +94,7 @@ const main = async topic => {
       }
     }
   }
-  
+
   console.log('Sending emails to subscribers at', currentTime)
   await sendEmails(mailJobs)
 

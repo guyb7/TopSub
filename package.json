@@ -11,12 +11,13 @@
     "test": "razzle test --env=jsdom",
     "start:prod": "NODE_ENV=production node build/server.js",
     "workers:scrape": "babel-node src/workers/scrape.js --presets es2015,stage-2",
-    "workers:send": "babel-node src/workers/send.js --presets es2015,stage-2",
+    "workers:send": "babel-node src/workers/send.js --presets es2015,stage-2,react",
     "db:start": "docker run --name topsub-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5444:5432 postgres",
     "db:rm": "docker stop topsub-postgres && docker rm topsub-postgres"
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-preset-react": "^6.24.1",
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
