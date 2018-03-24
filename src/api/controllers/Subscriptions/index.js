@@ -16,6 +16,22 @@ const findAll = async ({ email }) => {
   }))
 }
 
+const findSubscribers = async ({ topic, period }) => {
+  if (typeof topic === 'undefined' || typeof period === 'undefined') {
+    return []
+  }
+  const results = await DB.models.Subscriptions.findAll({
+    where: {
+      topic,
+      period
+    }
+  })
+  return results.map(r => ({
+    ...r.toJSON(),
+    topic: Topics.topicsDict[r.topic].info()
+  }))
+}
+
 const deleteOne = async ({ id, email }) => {
   if (typeof id === 'undefined' || typeof email === 'undefined') {
     throw new Error('no-such-subscription')
@@ -36,5 +52,6 @@ const deleteOne = async ({ id, email }) => {
 
 export default {
   findAll,
+  findSubscribers,
   deleteOne
 }

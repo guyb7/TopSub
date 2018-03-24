@@ -2,6 +2,14 @@ import moment from 'moment'
 
 import DB from '../../../DB/'
 
+const periods = [
+  // 'hour',
+  // 'day',
+  '3days',
+  'week',
+  'month'
+]
+
 const getStartTime = period => {
   let since
   switch (period) {
@@ -41,5 +49,6 @@ const find = async ({ limit, topic, period }) => {
 }
 
 export default {
-  find
+  find,
+  periods
 }
