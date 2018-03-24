@@ -5,7 +5,7 @@ import {
 } from 'validator'
 
 import Topics from '../controllers/Topics/'
-import DB from '../../DB/'
+import Subscriptions from '../controllers/Subscriptions/'
 
 function checkParams({ email, frequency, limit, period, time, topic, tzHoursOffset }) {
   if (!isEmail(email)) {
@@ -47,39 +47,20 @@ export default async req => {
     tzHoursOffset
   } = params
 
-  const hour = time === 'morning' ? 8 : (time === 'noon' ? 14 : 20)
-  let utcHour = hour + tzHoursOffset
-  if (utcHour < 0) {
-    utcHour = utcHour + 24
-  } else if (utcHour > 23) {
-    utcHour = utcHour - 24
-  }
-  let weekDay
-  switch (frequency) {
-    case 'daily':
-      weekDay = '*'
-      break
-    case 'sunday':
-      weekDay = 0
-      break
-    case 'monday':
-      weekDay = 1
-      break
-    case 'friday':
-      weekDay = 6
-      break
-    default:
-  }
-  const schedule = `* * ${utcHour} * * ${weekDay}`
-  await DB.models.Subscriptions.create({
-    topic,
-    limit,
-    period,
-    tzHoursOffset,
-    schedule,
-    email
-  })
-  return {
-    success: true
+  try {
+    await Subscriptions.create({
+      email,
+      frequency,
+      limit,
+      period,
+      time,
+      topic,
+      tzHoursOffset
+    })
+    return {
+      success: true
+    }
+  } catch (e) {
+    throw e
   }
 }

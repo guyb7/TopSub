@@ -21,16 +21,6 @@ export default sequelize => {
       defaultValue: 'day',
       allowNull: false
     },
-    schedule: {
-      // UTC
-      type: Sequelize.STRING,
-      defaultValue: '* * 8 * * *',
-      allowNull: false,
-      validate: {
-        // Sanity, not perfect match
-        is: /^[\d*,\s]+$/
-      }
-    },
     tzHoursOffset: {
       type: Sequelize.INTEGER,
       defaultValue: 0,
