@@ -1,9 +1,7 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
 
-import Basic from './components/Basic'
-import Tweet from './components/Tweet'
-import HackerNews from './components/HackerNews'
+import components from './components/'
 
 const styles = theme => {
   return {
@@ -22,17 +20,7 @@ const styles = theme => {
 class SearchResults extends React.Component {
   render() {
     const { classes, component, results } = this.props
-    let Component
-    switch(component) {
-      case 'Tweet':
-        Component = Tweet
-        break
-      case 'HackerNews':
-        Component = HackerNews
-        break
-      default:
-        Component = Basic
-    }
+    const Component = components.get(component)
     return (
       <div className={classes.root}>
         {
