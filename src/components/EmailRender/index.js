@@ -4,6 +4,17 @@ import Juice from 'juice'
 
 import SearchComponents from '../Search/components/'
 
+import JssProvider from 'react-jss/lib/JssProvider'
+import { create, SheetsRegistry } from 'jss'
+import jssCamelCase from 'jss-camel-case'
+import jssNested from 'jss-nested'
+import jssDefaultUnit from 'jss-default-unit'
+import jssPropsSort from 'jss-props-sort'
+
+const jss = create()
+jss.use(jssCamelCase(), jssNested(), jssDefaultUnit(), jssPropsSort())
+const sheets = new SheetsRegistry()
+
 class Email extends React.Component {
   render() {
     const compoenntToRender = this.props.component.info().component
@@ -20,7 +31,12 @@ class Email extends React.Component {
 }
 
 export default ({ component, results }) => {
-  const markup = renderToString(<Email component={component} results={results} />)
-  const styledMarkup = Juice(markup)
+  const markup = renderToString(
+    <JssProvider registry={sheets} jss={jss}>
+      <Email component={component} results={results} />
+    </JssProvider>
+  )
+  const css = sheets.toString()
+  const styledMarkup = Juice.inlineContent(markup, css)
   return styledMarkup
 }

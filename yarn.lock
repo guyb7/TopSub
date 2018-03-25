@@ -4671,7 +4671,7 @@ jss-vendor-prefixer@^7.0.0:
   dependencies:
     css-vendor "^0.3.8"
 
-jss@^9.3.3, jss@^9.7.0:
+jss@^9.3.3, jss@^9.7.0, jss@^9.8.1:
   version "9.8.1"
   resolved "https://registry.yarnpkg.com/jss/-/jss-9.8.1.tgz#e2ff250777ad657430e6edc47a63516541b888fa"
   dependencies:
@@ -6685,7 +6685,7 @@ react-event-listener@^0.5.1:
     prop-types "^15.6.0"
     warning "^3.0.0"
 
-react-jss@^8.1.0:
+react-jss@^8.1.0, react-jss@^8.3.5:
   version "8.3.5"
   resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-8.3.5.tgz#963ed6677e8112820d0495853cd4c3d0fb1d05fd"
   dependencies:
