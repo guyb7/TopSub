@@ -60,8 +60,6 @@ const sendEmails = async mailJobs => {
         content: markup
       }
     })
-    // console.log(j)
-    // console.log(markup)
   })
 }
 
