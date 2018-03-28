@@ -73,21 +73,27 @@ const main = async topic => {
   const limit = 10
   const currentTime = getCurrentTime()
   const mailJobs = []
+  const emailsCache = {}
   for (let topic of topicsList) {
     for (let period of periods) {
       // For each topic/period get the top 10 items
       const results = await Results.find({ limit, topic, period })
       if (results.length === 0) {
+        // console.log(`No results for topic: ${topic}, period: ${period}, limit: ${limit}`)
         continue
       }
       const data = results.map(r => r.dataValues)
       const subs = await getSubscribers({ topic, period, currentTime })
       for (let sub of subs) {
+        const emailCacheKey = `${topic}/${period}/${limit}`
+        if (!emailsCache[emailCacheKey]) {
+          emailsCache[emailCacheKey] = data.slice(0, sub.limit)
+        }
         mailJobs.push({
           topic,
           period,
           email: sub.email,
-          results: data.slice(0, sub.limit)
+          results: emailsCache[emailCacheKey]
         })
       }
     }
