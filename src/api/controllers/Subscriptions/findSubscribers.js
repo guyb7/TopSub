@@ -5,29 +5,29 @@ export default async ({ topic, period, time }) => {
     return []
   }
   const Op = DB.sequelize.Op
-  const results = await DB.models.Schedules.findAll({
+  const results = await DB.models.Subscriptions.findAll({
+    where: {
+      topic,
+      period
+    },
     include: [
       {
-        model: DB.models.Subscriptions,
+        model: DB.models.Schedules,
         as: 'subscription',
         required: true,
         where: {
-          topic,
-          period
+          minutes: {
+            [Op.contains]: [time.minute]
+          },
+          hours: {
+            [Op.contains]: [time.hour]
+          },
+          weekDay: {
+            [Op.contains]: [time.weekDay]
+          }
         }
       }
-   ],
-    where: {
-      minutes: {
-        [Op.contains]: [time.minute]
-      },
-      hours: {
-        [Op.contains]: [time.hour]
-      },
-      weekDay: {
-        [Op.contains]: [time.weekDay]
-      }
-    }
+   ]
   })
   return results.map(r => ({
     ...r.dataValues.subscription.dataValues,

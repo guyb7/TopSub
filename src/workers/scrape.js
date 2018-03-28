@@ -41,7 +41,7 @@ const main = async topic => {
       externalId: item.externalId,
       score: item.score,
       publishTime: item.time,
-      url: item.url,
+      url: item.url.toLocaleLowerCase(),
       data: item.data
     })
   })

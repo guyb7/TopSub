@@ -5,10 +5,11 @@ import Schedule from './models/schedule'
 import Subscription from './models/subscription'
 import User from './models/user'
 
+// Order is important for associations
 const modelsDefinitions = [
   Result,
-  Subscription,
   Schedule,
+  Subscription,
   User
 ]
 

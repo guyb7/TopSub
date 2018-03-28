@@ -19,7 +19,5 @@ export default sequelize => {
     timestamps: false
   })
 
-  Schedule.belongsTo(sequelize.models.Subscription, { as: 'subscription' })
-
   return Schedule
 }

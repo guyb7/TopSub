@@ -34,5 +34,9 @@ export default sequelize => {
       }
     }
   }, {})
+
+  Subscription.hasOne(sequelize.models.Schedule, { as: 'subscription' })
+  sequelize.models.Schedule.belongsTo(Subscription, { as: 'subscription' })
+
   return Subscription
 }
