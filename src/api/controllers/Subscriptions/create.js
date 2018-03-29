@@ -42,14 +42,14 @@ export default async ({
   topic,
   tzHoursOffset
 }) => {
-  const unsibscribeToken = uuid()
+  const unsubscribeToken = uuid()
   const result = await DB.models.Subscriptions.create({
     topic,
     limit,
     period,
     tzHoursOffset,
     email,
-    unsibscribeToken
+    unsubscribeToken
   })
   const subscriptionId = result.dataValues.id
   const schedule = generateSchedule({ tzHoursOffset, frequency, time })

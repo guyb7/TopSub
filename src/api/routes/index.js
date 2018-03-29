@@ -80,7 +80,7 @@ export default app => {
 
   app.get ('/api/profile', ensureLoggedIn, asyncMiddleware(getProfile))
   app.get ('/api/subscriptions', ensureLoggedIn, asyncMiddleware(getSubscriptions))
-  app.delete('/api/subscriptions/:id', ensureLoggedIn, asyncMiddleware(deleteSubscription))
+  app.delete('/api/subscriptions/:unsubscribeToken', ensureLoggedIn, asyncMiddleware(deleteSubscription))
 
   app.use('/api/admin/*', ensureAdmin)
 

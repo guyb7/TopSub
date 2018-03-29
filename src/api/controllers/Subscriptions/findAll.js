@@ -1,3 +1,5 @@
+import _omit from 'lodash/omit'
+
 import DB from '../../../DB/'
 import Topics from '../Topics/'
 
@@ -18,7 +20,7 @@ export default async ({ email }) => {
    ]
   })
   return results.map(s => ({
-    ...s.subscription.dataValues,
+    ..._omit(s.subscription.dataValues, ['id']),
     schedule: {
       minutes: s.dataValues.minutes,
       hours: s.dataValues.hours,

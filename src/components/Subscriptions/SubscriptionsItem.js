@@ -107,10 +107,10 @@ class SubscriptionsItem extends React.Component {
   }
 
   delete = async () => {
-    const id = this.props.data.id
-    await API.delete('/subscriptions/' + id)
+    const unsubscribeToken = this.props.data.unsubscribeToken
+    await API.delete('/subscriptions/' + unsubscribeToken)
     if (this.props.onDelete) {
-      this.props.onDelete(id)
+      this.props.onDelete(unsubscribeToken)
     }
   }
 

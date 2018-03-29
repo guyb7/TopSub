@@ -33,7 +33,7 @@ export default sequelize => {
         isEmail: true
       }
     },
-    unsibscribeToken: {
+    unsubscribeToken: {
       type: Sequelize.STRING
     },
   }, {})

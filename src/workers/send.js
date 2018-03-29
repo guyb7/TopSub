@@ -59,7 +59,7 @@ const sendEmails = async mailJobs => {
       context: {
         content: markup,
         email: j.email,
-        unsibscribeToken: j.unsibscribeToken
+        unsubscribeToken: j.unsubscribeToken
       }
     })
   })
@@ -95,7 +95,7 @@ const main = async topic => {
           topic,
           period,
           email: sub.email,
-          unsibscribeToken: sub.unsibscribeToken,
+          unsubscribeToken: sub.unsubscribeToken,
           results: emailsCache[emailCacheKey]
         })
       }

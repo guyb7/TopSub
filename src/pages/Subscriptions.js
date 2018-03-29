@@ -43,10 +43,10 @@ class Subscriptions extends React.Component {
     this.fetchSubscriptions()
   }
 
-  removeItem = id => {
+  removeItem = unsubscribeToken => {
     this.setState({
       ...this.state,
-      subscriptions: this.state.subscriptions.filter(i => i.id !== id)
+      subscriptions: this.state.subscriptions.filter(i => i.unsubscribeToken !== unsubscribeToken)
     })
   }
 
@@ -90,7 +90,7 @@ class Subscriptions extends React.Component {
           {
             this.state.subscriptions.map(i =>
               <SubscriptionsItem
-                key={i.id}
+                key={i.unsubscribeToken}
                 data={i}
                 onDelete={this.removeItem}
                 />
