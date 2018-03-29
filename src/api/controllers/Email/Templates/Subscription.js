@@ -43,6 +43,12 @@ const html = context => `
             <div class="footer">
               <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
+                  <td class="content-block">
+                    <span class="apple-link">TopSub Inc, 1 Street Road, San Francisco CA 94123</span>
+                    <br>Don't like these emails? <a href="${ROOT_URL}/unsubscribe?email=${context.email}&unsibscribeToken=${context.unsibscribeToken}">Unsubscribe</a>.
+                  </td>
+                </tr>
+                <tr>
                   <td class="content-block powered-by">
                     Sent from <a href="${ROOT_URL}">TopSub</a>.
                   </td>

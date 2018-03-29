@@ -32,7 +32,10 @@ export default sequelize => {
       validate: {
         isEmail: true
       }
-    }
+    },
+    unsibscribeToken: {
+      type: Sequelize.STRING
+    },
   }, {})
 
   Subscription.hasOne(sequelize.models.Schedule, { as: 'subscription' })

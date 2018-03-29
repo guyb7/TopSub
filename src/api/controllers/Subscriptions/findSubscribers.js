@@ -30,11 +30,6 @@ export default async ({ topic, period, time }) => {
    ]
   })
   return results.map(r => ({
-    ...r.dataValues.subscription.dataValues,
-    schedule: {
-      minutes: r.dataValues.minutes,
-      hours: r.dataValues.hours,
-      weekDay: r.dataValues.weekDay
-    }
+    ...r.toJSON()
   }))
 }

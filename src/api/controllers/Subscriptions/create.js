@@ -1,3 +1,5 @@
+import uuid from 'uuid/v4'
+
 import DB from '../../../DB/'
 
 const generateSchedule = ({ tzHoursOffset, frequency, time }) => {
@@ -40,12 +42,14 @@ export default async ({
   topic,
   tzHoursOffset
 }) => {
+  const unsibscribeToken = uuid()
   const result = await DB.models.Subscriptions.create({
     topic,
     limit,
     period,
     tzHoursOffset,
-    email
+    email,
+    unsibscribeToken
   })
   const subscriptionId = result.dataValues.id
   const schedule = generateSchedule({ tzHoursOffset, frequency, time })
