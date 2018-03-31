@@ -75,12 +75,12 @@ export default app => {
   app.post('/api/reset-password', asyncMiddleware(postResetPassword))
   app.post('/api/login', asyncMiddleware(postLogin))
   app.get ('/api/logout', asyncMiddleware(getLogout))
+  app.delete('/api/subscriptions/:unsubscribeToken', asyncMiddleware(deleteSubscription))
 
   app.get ('/api/emailPreview', getEmail)
 
   app.get ('/api/profile', ensureLoggedIn, asyncMiddleware(getProfile))
   app.get ('/api/subscriptions', ensureLoggedIn, asyncMiddleware(getSubscriptions))
-  app.delete('/api/subscriptions/:unsubscribeToken', ensureLoggedIn, asyncMiddleware(deleteSubscription))
 
   app.use('/api/admin/*', ensureAdmin)
 

@@ -12,6 +12,7 @@ import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import Subscriptions from './pages/Subscriptions'
+import Unsubscribe from './pages/Unsubscribe'
 import Theme from './Theme'
 
 import store from './store'
@@ -44,6 +45,7 @@ class App extends React.Component {
               <Route exact path="/forgot" component={ForgotPassword} />
               <Route exact path="/reset" component={ResetPassword} />
               <Route exact path="/subscriptions" component={Subscriptions} />
+              <Route exact path="/unsubscribe" component={Unsubscribe} />
             </Switch>
           </div>
         </MuiThemeProvider>
