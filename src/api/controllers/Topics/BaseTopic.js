@@ -25,9 +25,9 @@ export default class BaseTopic {
     }
   }
 
-  async fetch(url, method, params) {
+  async fetch({ url, method, params, headers }) {
     try {
-      const response = await axios({ url, method, params })
+      const response = await axios({ url, method, params, headers })
       return response.data
     } catch (e) {
       e.noCatch = true

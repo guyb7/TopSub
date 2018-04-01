@@ -5,6 +5,20 @@ import moment from 'moment'
 const styles = theme => {
   return {
     root: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: theme.palette.common.white,
+      minWidth: 400,
+      boxShadow: theme.shadows[2],
+      borderRadius: 2
+    }
+  }
+}
+
+const itemStyles = theme => {
+  return {
+    root: {
       backgroundColor: '#f6f6ef',
       color: '#000',
       width: '100%',
@@ -45,8 +59,7 @@ const styles = theme => {
     }
   }
 }
-
-class HackerNews extends React.Component {
+class HackerNewsItem extends React.Component {
   render() {
     const { classes, data } = this.props
     const timeAgo = moment.utc(data.publishTime).fromNow()
@@ -68,6 +81,20 @@ class HackerNews extends React.Component {
         <div className={classes.subtext}>
           {data.score} points <a href={hnUrl} target='_blank'>{timeAgo}</a> | <a href={hnUrl} target='_blank'>{data.data.comments} comments</a>
         </div>
+      </div>
+    )
+  }
+}
+const StyledHackerNewsItem = withStyles(itemStyles)(HackerNewsItem)
+
+class HackerNews extends React.Component {
+  render() {
+    const { classes, results } = this.props
+    return (
+      <div className={classes.root}>
+        {
+          results.map(r => <StyledHackerNewsItem key={r.id} data={r} />)
+        }
       </div>
     )
   }

@@ -1,7 +1,9 @@
 import HackerNews from './HackerNews/'
+import Dribbble from './Dribbble/'
 
 const topics = [
-  new HackerNews()
+  new HackerNews(),
+  new Dribbble()
 ]
 
 const topicsDict = topics.reduce((acc, t) => {

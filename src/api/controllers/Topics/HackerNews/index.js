@@ -21,7 +21,7 @@ class HackerNews extends BaseTopic {
     const url = 'https://hacker-news.firebaseio.com/v0/topstories.json'
     const method = 'get'
     try {
-      return this.fetch(url, method)
+      return this.fetch({ url, method })
     } catch (e) {
       throw e
     }
@@ -37,7 +37,7 @@ class HackerNews extends BaseTopic {
     const url = `https://hacker-news.firebaseio.com/v0/item/${id}.json`
     const method = 'get'
     try {
-      return this.fetch(url, method)
+      return this.fetch({ url, method })
     } catch (e) {
       throw e
     }

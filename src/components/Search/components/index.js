@@ -1,13 +1,13 @@
 import Basic from './Basic'
-import Tweet from './Tweet'
+import Dribbble from './Dribbble'
 import HackerNews from './HackerNews'
 
 export default {
   get: component => {
     let Component
     switch(component) {
-      case 'Tweet':
-        Component = Tweet
+      case 'Dribbble':
+        Component = Dribbble
         break
       case 'HackerNews':
         Component = HackerNews

@@ -11,18 +11,12 @@ const main = async topic => {
   const data = await t.fetchList()
   const items = t.parseList(data)
 
-  // Filter existing
-  const ids = await DB.models.Results.findAll({ attributes: ['externalId'] }).map(r => r.externalId)
-  const existingIds = new Set(ids)
-  const filtered = _.filter(items, i => !existingIds.has(i.externalId))
-
   console.log('[Found]', items.length)
-  console.log('[Already existing]', [...existingIds].length)
 
   // Fetch each item
-  const fetchJobs = filtered.map(i => {
+  const fetchJobs = items.map(i => {
     return new Promise(resolve => {
-      t.fetchOne(i.externalId)
+      t.fetchOne(i.data ? i : i.externalId)
         .then(itemData => {
           const item = t.parseOne(itemData)
           resolve(item)
@@ -36,7 +30,7 @@ const main = async topic => {
   // Store data
   console.log('[Storing]', itemsToStore.length)
   const storeJobs = itemsToStore.map(async item => {
-    await DB.models.Results.create({
+    await DB.models.Results.upsert({
       topic,
       externalId: item.externalId,
       score: item.score,
